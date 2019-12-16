@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cjpangilinan/falcon-garage.git"
+    "url": "git+https://github.com/aurora-system/falcon-garage.git"
   },
   "author": "Cj & Andrew",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cjpangilinan/falcon-garage/issues"
+    "url": "https://github.com/aurora-system/falcon-garage/issues"
   },
-  "homepage": "https://github.com/cjpangilinan/falcon-garage#readme",
+  "homepage": "https://github.com/aurora-system/falcon-garage#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
