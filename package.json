@@ -1,0 +1,27 @@
+{
+  "name": "falcon-garage",
+  "version": "1.0.0",
+  "description": "inventory and order management for falcon garage",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjpangilinan/falcon-garage.git"
+  },
+  "author": "Cj & Andrew",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cjpangilinan/falcon-garage/issues"
+  },
+  "homepage": "https://github.com/cjpangilinan/falcon-garage#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "mongodb": "^3.4.0",
+    "mongoose": "^5.8.1"
+  }
+}
