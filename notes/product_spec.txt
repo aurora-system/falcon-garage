@@ -1,0 +1,50 @@
+products:
+
+product_type:
+- id
+- name 
+
+PRODUCT CARD:
+- name - free to enter anything
+- brand - type lang nila
+- other_details ()
+- for what vehicle (optional field) 
+- color - input text (optional)
+- aqui_price - input text
+- srp - input text
+- stock_level - input text
+- type/category/id - sheet name in google sheet
+
+- vehicle_make_model (vios 2012)
+
+- supplier_name
+
+in-out-history:
+- date
+- type (in or out)
+- product_id
+
+
+
+product dropdown sa order page:
+dropdown1: type/cateogry
+dropdown2: products under that category
+
+
+
+UI flow:
+
+Add product category:
+- save to product_category table
+
+Add product form:
+- save to product table
+
+Update stock level, Add stock: ( use this for the initial count)
+- update stock level in product table
+- save in/out entry to in-out-history
+
+Order delivery:
+- save in/out entry to in-out-history
+- update stock level in product table
+
