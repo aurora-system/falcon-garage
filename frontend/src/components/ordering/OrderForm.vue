@@ -34,18 +34,29 @@
                     </v-col>
 
 
-                    <v-col class="d-flex" cols="12" md="8">
+                    <v-col class="d-flex" cols="12" md="9">
                          <v-container>
-                             <h4>Order Items</h4>
+                             <h4>Products</h4>
                              <v-row v-for="(input, index) in inputs" v-bind:key="index" dense>
-                    
-                                <v-col cols="12" md="8">
+                                 
+                                <v-col cols="12" md="4">
+                                    <v-select
+                                        :items="productCategories"
+                                        name="productCategory"
+                                        item-text="name"
+                                        item-value="categoryId"
+                                        label="Product Category"
+                                        outlined>
+
+                                    </v-select>
+                                </v-col>
+                                <v-col cols="12" md="4">
                                     <v-select 
                                         @change=getSubtotalAmount(input.quantity,input.product,index)
                                         :items="products" 
                                         name="product" 
                                         item-text="name" 
-                                        item-value="cost"
+                                        item-value="srp"
                                         label="Product" 
                                         v-model="input.product"
                                         outlined>
@@ -57,7 +68,7 @@
                                 </v-col>
 
                                 <v-col class="subtotalCost" cols="12" md="2">
-                                    <v-alert @change="getTotalAmount()" text v-model="input.cost" color="green" icon="mdi-currency-php">{{ input.subtotal }}</v-alert>
+                                    <v-alert text v-model="input.cost" color="green" icon="mdi-currency-php">{{ input.subtotal }}</v-alert>
                                 </v-col>
 
                                 <v-col class="deleteBtn" cols="12" md="1">
@@ -74,8 +85,8 @@
                               </v-row>
 
                             <v-row>
-                                <v-col cols="12" md="5"><h4>Total Amount: </h4></v-col>
-                                <v-col cols="12" md="7">
+                                <v-col cols="12" md="3"><h4>Total Amount: </h4></v-col>
+                                <v-col cols="12" md="9">
                                     <v-alert class="totalAmount" text color="green" icon="mdi-currency-php" >{{ totalAmount }}</v-alert>
                                 </v-col>
                             </v-row>
@@ -100,6 +111,7 @@
 <script>
     import OrderService from '../../services/OrderService';
     import ProductService from '../../services/ProductService';
+    import ProductCategoryService from '../../services/ProductCategoryService';
 
     export default {
         data () {
@@ -114,7 +126,8 @@
                     remarks: ''
                 },
                 orderTypes: [ 'sale', 'service'],
-                products: []
+                products: [],
+                productCategories: []
             }
         },
         computed: {
@@ -148,12 +161,14 @@
                 } catch (err) {
                     this.error = err.message;
                 }
+
+                
             }
         },
         async created() {
             try {
                 this.products = await ProductService.getProducts();
-                console.log("Printing products: " + this.products);
+                this.productCategories = await ProductCategoryService.getProductCategories();
             } catch (err) {
                 this.error = err.message;
             }

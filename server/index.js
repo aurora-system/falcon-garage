@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 
 const productsRouter = require('./routes/products');
+const productCategoriesRouter = require('./routes/productCategories');
 const ordersRouter = require('./routes/orders');
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use('/api/products', productsRouter);
+app.use('/api/productcategories', productCategoriesRouter);
 app.use('/api/orders', ordersRouter)
 
 // db config

@@ -12,7 +12,7 @@ class OrderService {
                 const data = res.data;
                 resolve(data.map(order => ({
                     ...order,
-                    createdDate: new Date(order.createdDate)
+                    createdDate: order.createdDate.substring(0,16)
                 })))
             } catch (err) {
                 reject(err)
@@ -21,10 +21,14 @@ class OrderService {
     }
 
     // Create Order
-    static insertOrder(orderId, type) {
-        return axios.post(url, {orderId, type});
+    static insertOrder(order) {
+        return axios.post(url, { order });
     }
 
+    formatCompat(date) {
+        var ms = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return date.getDate() + ' ' + ms[date.getMonth()] + ' ' + date.getFullYear();
+      }
 }
 
 export default OrderService;
