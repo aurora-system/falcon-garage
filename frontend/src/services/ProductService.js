@@ -19,6 +19,20 @@ class ProductService {
         })
     }
 
+    static getProductsOfCategory(category_id) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await axios.get(`${url}` + 'category=' + category_id);
+                const data = res.data;
+                resolve(data.map(product => ({
+                    ...product
+                })))
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+
     // Create Product
     static insertProduct(productId, type) {
         return axios.post(url, {productId, type});

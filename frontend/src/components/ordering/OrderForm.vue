@@ -3,6 +3,7 @@
         <v-form>
             <v-container>
                 <v-row> 
+                    <!-- BASIC ORDER DETAILS -->
                     <v-col class="d-flex">
                          <v-container>
                             <h4>Order Details</h4>
@@ -33,23 +34,28 @@
                          </v-container>
                     </v-col>
 
-
+                    <!-- PRODUCTS SELECTION -->
                     <v-col class="d-flex" cols="12" md="9">
                          <v-container>
                              <h4>Products</h4>
                              <v-row v-for="(input, index) in inputs" v-bind:key="index" dense>
                                  
+                                <!-- CATEGORIES -->
                                 <v-col cols="12" md="4">
                                     <v-select
+                                        @change="getProductsOfCategory(input.productCategory)"
                                         :items="productCategories"
                                         name="productCategory"
                                         item-text="name"
-                                        item-value="categoryId"
-                                        label="Product Category"
+                                        item-value="category_id"
+                                        label="Category"
+                                        v-model="input.productCategory"
                                         outlined>
 
                                     </v-select>
                                 </v-col>
+
+                                <!--_PRODUCTS -->
                                 <v-col cols="12" md="4">
                                     <v-select 
                                         @change=getSubtotalAmount(input.quantity,input.product,index)
@@ -117,7 +123,7 @@
         data () {
             return {
                 totalAmount: 0,
-                inputs: [ { product: '', quantity: '', subtotal: 0 } ],
+                inputs: [ { product: '', category: '', quantity: '', subtotal: 0 } ],
                 order: {
                     orderId: '1',
                     type: '',
@@ -140,7 +146,8 @@
             addRow() {
                 this.inputs.push({
                     product: '',
-                    quantity: ''
+                    category: '',
+                    quantity: '',
                 })
             },
             deleteRow(index) {
@@ -155,6 +162,10 @@
                 inputItem.subtotal = qty*cost;
                 this.totalAmount = this.totalAmount + inputItem.subtotal;
             },
+            getProductsOfCategory (categoryId) {
+                this.products = ProductService.getProductsOfCategory(categoryId);
+                console.log(this.products);
+            },
             async createOrder () {
                 try {
                     this.orders = await OrderService.insertOrder(this.order);
@@ -167,7 +178,6 @@
         },
         async created() {
             try {
-                this.products = await ProductService.getProducts();
                 this.productCategories = await ProductCategoryService.getProductCategories();
             } catch (err) {
                 this.error = err.message;

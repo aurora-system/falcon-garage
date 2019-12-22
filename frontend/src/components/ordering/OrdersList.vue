@@ -27,10 +27,10 @@
       singleSelect: false,
       selected: [],
       headers: [
-        { text: 'Ref. No.', value: 'referenceNum'},
+        { text: 'Ref. No.', value: 'reference_num'},
         { text: 'Type', value: 'type' },
-        { text: 'Customer Name', value: 'customerName' },
-        { text: 'Created Date', value: 'createdDate' },
+        { text: 'Customer Name', value: 'customer_name' },
+        { text: 'Created Date', value: 'created_date' },
         { text: 'Remarks', value: 'remarks'}
       ],
       orders: [],

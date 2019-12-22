@@ -10,11 +10,11 @@ const OrderSchema = new Schema({
         type: String,
         required: true
     },
-    customerName: {
+    customer_name: {
         type: String,
         required: true
     },
-    createdDate: {
+    created_date: {
         type: Date,
         required: true
     },
@@ -22,7 +22,7 @@ const OrderSchema = new Schema({
         type: String,
         required: false
     },
-    referenceNum: {
+    reference_num: {
         type: String,
         required: true
     }
