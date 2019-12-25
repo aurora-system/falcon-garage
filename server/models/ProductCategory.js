@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProductCatergorySchema = new Schema({
-    category_id: {
+    categoryId: {
         type: Number,
         required: true,
     },

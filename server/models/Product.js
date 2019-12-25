@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
-    category_id: {
+    categoryId: {
         type: Number,
         required: true
     },
-    product_id: {
+    productId: {
         type: Number,
         required: true
     },
-    supplier_id: {
+    supplierId: {
         type: Number,
         required: true
     }, 
@@ -22,11 +22,11 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
-    other_details: {
+    otherDetails: {
         type: String,
         required: false
     },
-    for_vehicle: {
+    forVehicle: {
         type: String,
         required: false
     },
@@ -34,7 +34,7 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
-    aqui_price: {
+    aquiPrice: {
         type: Number,
         required: true
     },
@@ -42,7 +42,7 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     },
-    costock_level: {
+    stockLevel: {
         type: Number,
         required: true
     }

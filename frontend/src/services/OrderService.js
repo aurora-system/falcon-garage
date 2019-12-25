@@ -12,7 +12,7 @@ class OrderService {
                 const data = res.data;
                 resolve(data.map(order => ({
                     ...order,
-                    create_date: order.created_date.substring(0,16)
+                    createdDate: order.createdDate.substring(0,16)
                 })))
             } catch (err) {
                 reject(err)

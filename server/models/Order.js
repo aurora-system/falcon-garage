@@ -10,11 +10,11 @@ const OrderSchema = new Schema({
         type: String,
         required: true
     },
-    customer_name: {
+    customerName: {
         type: String,
         required: true
     },
-    created_date: {
+    createdDate: {
         type: Date,
         required: true
     },
@@ -22,9 +22,14 @@ const OrderSchema = new Schema({
         type: String,
         required: false
     },
-    reference_num: {
+    referenceNum: {
         type: String,
         required: true
+    },
+    products: {
+        type: Object,
+        required: false
     }
+
 })
 mongoose.model('orders', OrderSchema)

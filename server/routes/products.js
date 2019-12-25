@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 
 // list products for a given category
 router.get('/category=:id', function(req, res, next) {
-    Product.find({ category_id: req.params.id })
+    Product.find({ categoryId: req.params.id })
       .sort({name: 'asc'})
       .then(products => {
           console.log(products);

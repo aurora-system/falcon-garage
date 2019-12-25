@@ -47,7 +47,7 @@
                                         :items="productCategories"
                                         name="productCategory"
                                         item-text="name"
-                                        item-value="category_id"
+                                        item-value="categoryId"
                                         label="Category"
                                         v-model="input.category"
                                         outlined>
@@ -128,7 +128,8 @@
                     type: '',
                     customerName: '',
                     createdDate: '',
-                    remarks: ''
+                    remarks: '',
+                    products: []
                 },
                 orderTypes: [ 'sale', 'service'],
                 products: [],
