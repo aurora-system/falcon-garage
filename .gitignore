@@ -102,6 +102,3 @@ dist
 
 # TernJS port file
 .tern-port
-
-# Compiles Vue js files
-server/public

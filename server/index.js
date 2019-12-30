@@ -12,7 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 // Routes middleware
-app.use('/', require('./routes/index'));
 app.use('/api/products', require('./routes/products'));
 app.use('/api/productcategories', require('./routes/productCategories'));
 app.use('/api/orders', require('./routes/orders'));
@@ -34,13 +33,13 @@ mongoose.connect(mongoURI, {
 
 
 // Handle production
-if (process.env.NODE_ENV === 'production') {
+//if (process.env.NODE_ENV === 'production') {
   // Static folder
   app.use(express.static(__dirname + '/public/'));
 
   // Handle SPA
   app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
-}
+//}
 
 const port = process.env.PORT || 5000;
 
