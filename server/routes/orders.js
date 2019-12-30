@@ -16,12 +16,14 @@ router.get('/', function(req, res, next) {
     })
 });
 
-router.post('/', function(req, res, next) {
+router.post('/', async (req, res) => {
+
     let newOrder = {
-        orderId: req.body.orderId, 
-        type: req.body.type, 
-        customerName: req.body.customerName,
-        createdDate: new Date() 
+        type: req.body.order.type,
+        customerName: req.body.order.customerName,
+        createdDate: new Date(),
+        referenceNum: Math.floor(100000 + Math.random() * 900000),
+        remarks: req.body.order.remarks
     };
     
     new Order(newOrder)

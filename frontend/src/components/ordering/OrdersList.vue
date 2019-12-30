@@ -27,12 +27,7 @@
       singleSelect: false,
       selected: [],
       headers: [
-        {
-          text: 'Order ID',
-          align: 'left',
-          sortable: false,
-          value: 'orderId',
-        },
+        { text: 'Ref. No.', value: 'referenceNum'},
         { text: 'Type', value: 'type' },
         { text: 'Customer Name', value: 'customerName' },
         { text: 'Created Date', value: 'createdDate' },

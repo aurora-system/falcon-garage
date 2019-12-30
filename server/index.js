@@ -14,6 +14,7 @@ app.use(cors());
 // Routes middleware
 app.use('/', require('./routes/index'));
 app.use('/api/products', require('./routes/products'));
+app.usse('/api/productcategories', require('./routes/productCategories'));
 app.use('/api/orders', require('./routes/orders'));
 app.use('/api/customers', require('./routes/customers'));
 app.use('/api/suppliers', require('./routes/suppliers'));

@@ -14,11 +14,11 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
-    other_details: {
+    otherDetails: {
         type: String,
         required: false
     },
-    for_vehicle: {
+    forVehicle: {
         type: String,
         required: false
     },
@@ -26,7 +26,7 @@ const ProductSchema = new Schema({
         type: String,
         required: false
     },
-    aqui_price: {
+    aquiPrice: {
         type: Number,
         required: true
     },
@@ -34,7 +34,7 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     },
-    stock_level: {
+    stockLevel: {
         type: Number,
         required: true
     },
