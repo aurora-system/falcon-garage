@@ -11,4 +11,4 @@ const ProductCatergorySchema = new Schema({
         required: true
     }
 })
-mongoose.model('productCategories', ProductCatergorySchema)
+mongoose.model('ProductCategory', ProductCatergorySchema)

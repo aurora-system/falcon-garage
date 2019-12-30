@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 // load Product Model
 require('../models/Product');
-const Product = mongoose.model('products');
+const Product = mongoose.model('Product');
 
 // list all products
 router.get('/', function(req, res, next) {
@@ -17,13 +17,28 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    let newProd = {productId: 2, name: 'Sample2', cost: "100"};
+    let newProd = {
+        productId: req.body.productId, 
+        name: req.body.name, 
+        brand: req.body.brand, 
+        other_details: req.body.other_details, 
+        for_vehicle: req.body.for_vehicle, 
+        color: req.body.color, 
+        aqui_price: req.body.aqui_price,
+        srp: req.body.srp,
+        stock_level: req.body.stock_level,
+        categoryId: req.body.categoryId,
+        supplier_name: req.body.supplier_name
+    };
+    //console.log('req.body:', req.body)
+    //console.log('newProd', newProd)
     new Product(newProd)
         .save()
         .then(prod => {
             console.log(prod);
             res.json(prod)
         })
+        .catch(err => console.log(err))
 });
 
 module.exports = router;

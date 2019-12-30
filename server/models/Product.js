@@ -2,18 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
-    categoryId: {
-        type: Number,
-        required: true
-    },
     productId: {
         type: Number,
         required: true
     },
-    supplierId: {
-        type: Number,
-        required: true
-    }, 
     name: {
         type: String,
         required: true
@@ -22,19 +14,19 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
-    yearModel: {
+    other_details: {
         type: String,
         required: false
     },
-    version: {
+    for_vehicle: {
         type: String,
         required: false
     },
-    itemCode: {
+    color: {
         type: String,
-        required: true
+        required: false
     },
-    capital: {
+    aqui_price: {
         type: Number,
         required: true
     },
@@ -42,10 +34,19 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     },
-    count: {
+    stock_level: {
         type: Number,
         required: true
-    }
+    },
+    categoryId: {
+        type: Number,
+        required: true
+    },
+    supplier_name: {
+        type: String,
+        required: true
+    }, 
+    
 });
 
-mongoose.model('products', ProductSchema);
+mongoose.model('Product', ProductSchema);
