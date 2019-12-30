@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 // load Product Category Model
 require('../models/ProductCategory');
-const ProductCategory = mongoose.model('productCategories');
+const ProductCategory = mongoose.model('ProductCategory');
 
 // list all product categories
 router.get('/', function(req, res, next) {
