@@ -22,6 +22,7 @@ router.post('/', async (req, res) => {
         type: req.body.order.type,
         customerName: req.body.order.customerName,
         createdDate: new Date(),
+        totalAmount: req.body.order.totalAmount,
         referenceNum: Math.floor(100000 + Math.random() * 900000),
         remarks: req.body.order.remarks,
         products: req.body.order.products

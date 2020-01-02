@@ -1,19 +1,19 @@
 <template>
   <div class="order">
     <v-app id="orderList">
-      <v-data-table
-        v-model="selected"
-        :headers="headers"
-        :items="orders"
-        :single-select="singleSelect"
-        item-key="name"
-        show-select
-        class="elevation-1"
-      >
-        <template v-slot:top>
-          <v-switch v-model="singleSelect" label="Single select" class="pa-3"></v-switch>
-        </template>
-      </v-data-table>
+       <v-card>
+         <v-card-title>
+          <h4>List of Orders</h4>
+        </v-card-title>
+        <v-data-table
+          v-model="selected"
+          :headers="headers"
+          :items="orders"
+          item-key="name"
+          class="elevation-1"
+        >
+        </v-data-table>
+       </v-card>
     </v-app>
   </div>
 </template>
@@ -25,11 +25,11 @@
     data () {
     return {
       singleSelect: false,
-      selected: [],
       headers: [
         { text: 'Ref. No.', value: 'referenceNum'},
         { text: 'Type', value: 'type' },
         { text: 'Customer Name', value: 'customerName' },
+        { text: 'Total Amount', value: 'totalAmount'},
         { text: 'Created Date', value: 'createdDate' },
         { text: 'Remarks', value: 'remarks'}
       ],

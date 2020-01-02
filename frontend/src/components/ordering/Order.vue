@@ -5,7 +5,6 @@
       <orderForm></orderForm>
     </div>
     <div class="orderList">
-      <h3>List of Orders</h3>
       <ordersList></ordersList>
     </div>
   </div>

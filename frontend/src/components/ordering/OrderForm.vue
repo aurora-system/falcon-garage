@@ -140,6 +140,7 @@
                     type: '',
                     customerName: '',
                     createdDate: '',
+                    totalAmount: 0,
                     remarks: '',
                     products: []
                 },
@@ -149,17 +150,7 @@
             }
         },
         computed: {
-            /*getTotalAmount () {
-                var totalAmount = 0;
-                console.log("length: " + this.inputs.length);
-                for (var input in this.inputs) {
-                    console.log("Input subtotal: " + input.subtotal);
-                    if (input.subtotal != undefined) {
-                        totalAmount = totalAmount + input.subtotal;
-                    }
-                }
-                return totalAmount;
-            }*/
+
         },
         methods: {
             showAlert () {
@@ -170,7 +161,7 @@
                     products: [],
                     category: '',
                     quantity: '',
-                    subtotal: 1000,
+                    subtotal: 0,
                     selectedProductId: ''
                 })
             },
@@ -197,37 +188,24 @@
                 
                 var inputItem = this.inputs[index];
                 inputItem.selectedProduct = id;
-                console.log("ID: " + id)
 
                 var product = await ProductService.getProductById(id);
-                console.log("Product Object: " + product);
-                console.log("Product srp: " + product.srp)
-                console.log("Inputs: " + this.inputs);
                 inputItem.quantity = qty;
                 inputItem.subtotal = qty*product.srp;
 
                 // Update the total amount
                 this.totalAmount = 0;
                 for (var i = 0; i < this.inputs.length; i++) {
-                    console.log("Input Subtotal: " + this.inputs[i].subtotal);
-                    console.log("Input Quantity: " + this.inputs[i].quantity);
-                    console.log("Input ProdId: " + this.inputs[i].selectedProductId);
                     if (this.inputs[i].subtotal != null) {
                         this.totalAmount = this.totalAmount + this.inputs[i].subtotal;
-                        console.log("TOT: " + this.totalAmount);
+                        this.order.totalAmount = this.totalAmount;
                     }
                 }
             },
-
             async getProductsOfCategory (categoryId, index) {
                 var inputItem = this.inputs[index];
                 inputItem.products = await ProductService.getProductsOfCategory(categoryId);
             },
-            /*async getProductById (id) {
-                var product = await ProductService.getProductById(id);
-                console.log("Product: " + product);
-                return product;
-            },*/
             async createOrder () {
                 console.log("In create order method.");
                 try {
@@ -235,7 +213,6 @@
                     
                     for (var i = 0; i < this.inputs.length; i++) {
                         console.log("Name of the selected product: " + this.inputs[i].selectedProductId);
-                        //var selectedProduct = { name : 'Tailgate', category: '2', forVehicle: 'Ranger'};
                         var product = await ProductService.getProductById(this.inputs[i].selectedProductId);
                         orderToInsert.products.push(product);
                     }
