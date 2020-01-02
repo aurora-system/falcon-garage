@@ -42,7 +42,7 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     },
-    supplier_name: {
+    supplierName: {
         type: String,
         required: true
     }, 

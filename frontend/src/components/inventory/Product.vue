@@ -1,12 +1,17 @@
 <template>
-    <div class="product">
-        <p>This is the products page.</p>
-    </div>
+    <v-container>
+      <product-list></product-list>
+    </v-container>
 </template>
 
 <script>
+import ProductService from '../../services/ProductService'
+import ProductList from './ProductList'
+
 export default {
-    
+  components: {
+    ProductList
+  }
 }
 </script>
 
