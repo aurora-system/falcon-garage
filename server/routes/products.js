@@ -26,6 +26,15 @@ router.get('/category=:id', function(req, res, next) {
       })
   });
 
+// get product by _id
+router.get('/id=:id', function(req, res, next) {
+    Product.findById({ _id: req.params.id })
+      .then(product => {
+          console.log(product);
+          res.json(product);
+      })
+  });
+
 router.post('/', function(req, res, next) {
     let newProd = {
         productId: req.body.productId, 

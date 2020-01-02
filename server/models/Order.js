@@ -18,6 +18,10 @@ const OrderSchema = new Schema({
         type: Date,
         required: true
     },
+    totalAmount: {
+        type: Number,
+        required: false
+    },
     remarks: {
         type: String,
         required: false
@@ -32,4 +36,4 @@ const OrderSchema = new Schema({
     }
 
 })
-mongoose.model('orders', OrderSchema)
+mongoose.model('Order', OrderSchema)

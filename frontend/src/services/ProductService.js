@@ -4,7 +4,7 @@ const url = "http://localhost:8080/api/products/";
 
 class ProductService {
     
-    // Get Products
+    // Get all products
     static getProducts() {
         return new Promise(async (resolve, reject) => {
             try {
@@ -19,6 +19,7 @@ class ProductService {
         })
     }
 
+    // Get all products for a given category
     static getProductsOfCategory(category_id) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -33,7 +34,20 @@ class ProductService {
         })
     }
 
-    // Create Product
+    // Get a single product by id
+    static getProductById(id) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await axios.get(`${url}` + 'id=' + id);
+                const data = res.data;
+                resolve(data);
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+
+    // Create a product
     static insertProduct(productId, type) {
         return axios.post(url, {productId, type});
     }

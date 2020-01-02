@@ -25,7 +25,7 @@
                                         label="Remarks"
                                         value=""
                                         height="100"
-                                        no-resize="true"
+                    
                                         v-model="order.remarks"
                                         ></v-textarea>
                                 </v-col>
@@ -57,23 +57,35 @@
                                 <!--_PRODUCTS -->
                                 <v-col cols="12" md="4">
                                     <v-select 
-                                        @change=getSubtotalAmount(input.quantity,input.product,index)
+                                        @change=getSubtotalAmount(input.quantity,input.selectedProductId,index)
                                         :items=input.products
                                         name="product" 
                                         item-text="name" 
-                                        item-value="srp"
+                                        item-value="_id"
                                         label="Product" 
-                                        v-model="input.product"
+                                        v-model="input.selectedProductId"
                                         outlined>
                                     </v-select>
                                 </v-col>
 
+                                <!-- QUANTITY -->
                                 <v-col cols="12" md="1">
-                                    <v-text-field id="quantity" @change=getSubtotalAmount(input.quantity,input.product,index) v-model="input.quantity" label="Qty" required outlined></v-text-field>
+                                    <v-text-field 
+                                        id="quantity" 
+                                        @change=getSubtotalAmount(input.quantity,input.selectedProductId,index) 
+                                        v-model="input.quantity" 
+                                        label="Qty" 
+                                        required 
+                                        outlined></v-text-field>
                                 </v-col>
 
+                                <!-- SUBTOTAL -->
                                 <v-col class="subtotalCost" cols="12" md="2">
-                                    <v-alert text v-model="input.cost" color="green" icon="mdi-currency-php">{{ input.subtotal }}</v-alert>
+                                    <v-alert 
+                                        id="subtotal"
+                                        text 
+                                        color="green" 
+                                        icon="mdi-currency-php">{{ input.subtotal }}</v-alert>
                                 </v-col>
 
                                 <v-col class="deleteBtn" cols="12" md="1">
@@ -122,7 +134,7 @@
         data () {
             return {
                 totalAmount: 0,
-                inputs: [ { products: [], category: '', quantity: '', subtotal: 0, selectedProduct: '' } ],
+                inputs: [ { products: [], category: '', quantity: '', subtotal: 0, selectedProductId: '' } ],
                 order: {
                     orderId: '1',
                     type: '',
@@ -137,7 +149,17 @@
             }
         },
         computed: {
-            
+            /*getTotalAmount () {
+                var totalAmount = 0;
+                console.log("length: " + this.inputs.length);
+                for (var input in this.inputs) {
+                    console.log("Input subtotal: " + input.subtotal);
+                    if (input.subtotal != undefined) {
+                        totalAmount = totalAmount + input.subtotal;
+                    }
+                }
+                return totalAmount;
+            }*/
         },
         methods: {
             showAlert () {
@@ -147,7 +169,9 @@
                 this.inputs.push({
                     products: [],
                     category: '',
-                    quantity: ''
+                    quantity: '',
+                    subtotal: 1000,
+                    selectedProductId: ''
                 })
             },
             deleteRow(index) {
@@ -157,20 +181,69 @@
                 }
                 this.inputs.splice(index,1);
             },
-            getSubtotalAmount (qty, cost, index) {
+            /*getTotalAmount () {
+                var totalAmount = 0;
+                console.log("In getTotalAmount - length: " + this.inputs.length);
+                for (var input in this.inputs) {
+                    console.log("Input subtotal: " + input.subtotal);
+                    if (input.subtotal != undefined) {
+                        totalAmount = totalAmount + input.subtotal;
+                    }
+                }
+                return totalAmount;
+            },*/
+
+            async getSubtotalAmount (qty, id, index) {
+                
                 var inputItem = this.inputs[index];
-                inputItem.subtotal = qty*cost;
-                this.totalAmount = this.totalAmount + inputItem.subtotal;
+                inputItem.selectedProduct = id;
+                console.log("ID: " + id)
+
+                var product = await ProductService.getProductById(id);
+                console.log("Product Object: " + product);
+                console.log("Product srp: " + product.srp)
+                console.log("Inputs: " + this.inputs);
+                inputItem.quantity = qty;
+                inputItem.subtotal = qty*product.srp;
+
+                // Update the total amount
+                this.totalAmount = 0;
+                for (var i = 0; i < this.inputs.length; i++) {
+                    console.log("Input Subtotal: " + this.inputs[i].subtotal);
+                    console.log("Input Quantity: " + this.inputs[i].quantity);
+                    console.log("Input ProdId: " + this.inputs[i].selectedProductId);
+                    if (this.inputs[i].subtotal != null) {
+                        this.totalAmount = this.totalAmount + this.inputs[i].subtotal;
+                        console.log("TOT: " + this.totalAmount);
+                    }
+                }
             },
+
             async getProductsOfCategory (categoryId, index) {
                 var inputItem = this.inputs[index];
                 inputItem.products = await ProductService.getProductsOfCategory(categoryId);
             },
+            /*async getProductById (id) {
+                var product = await ProductService.getProductById(id);
+                console.log("Product: " + product);
+                return product;
+            },*/
             async createOrder () {
+                console.log("In create order method.");
                 try {
+                    var orderToInsert = this.order;
+                    
+                    for (var i = 0; i < this.inputs.length; i++) {
+                        console.log("Name of the selected product: " + this.inputs[i].selectedProductId);
+                        //var selectedProduct = { name : 'Tailgate', category: '2', forVehicle: 'Ranger'};
+                        var product = await ProductService.getProductById(this.inputs[i].selectedProductId);
+                        orderToInsert.products.push(product);
+                    }
+
                     this.orders = await OrderService.insertOrder(this.order);
                 } catch (err) {
                     this.error = err.message;
+                    console.log(this.error);
                 }
 
                 

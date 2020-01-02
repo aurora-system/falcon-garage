@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 // load Product Model
 require('../models/Order');
-const Order = mongoose.model('orders');
+const Order = mongoose.model('Order');
 
 // list all orders
 router.get('/', function(req, res, next) {
@@ -23,7 +23,8 @@ router.post('/', async (req, res) => {
         customerName: req.body.order.customerName,
         createdDate: new Date(),
         referenceNum: Math.floor(100000 + Math.random() * 900000),
-        remarks: req.body.order.remarks
+        remarks: req.body.order.remarks,
+        products: req.body.order.products
     };
     
     new Order(newOrder)
