@@ -4,13 +4,24 @@
        <v-card>
          <v-card-title>
           <h4>List of Orders</h4>
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
         </v-card-title>
         <v-data-table
-          v-model="selected"
           :headers="headers"
           :items="orders"
           item-key="name"
           class="elevation-1"
+          no-data-text="There are no orders."
+          sort-by="createdDate"
+          sort-desc
+          :search="search"
         >
         </v-data-table>
        </v-card>
@@ -34,6 +45,7 @@
         { text: 'Remarks', value: 'remarks'}
       ],
       orders: [],
+      search: ''
     }
   },
   async created() {
