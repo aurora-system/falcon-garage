@@ -6,14 +6,20 @@
       </v-card-title>
       <v-card-text>
         <v-data-table
-          v-model="selected"
+          
           :headers="headers"
           :items="products"
           :single-select="false"
-          item-key="name"
+          item-key="productId"
           class="elevation-1"
         ></v-data-table>
       </v-card-text>
+      <v-card-action class="d-flex ml-4">
+        <v-btn class="success mb-4">Add Category</v-btn>
+        <router-link to="/addProduct">
+          <v-btn class="info mb-4">Add Product</v-btn>
+        </router-link>
+      </v-card-action>
     </v-card>
   </div>
 </template>
@@ -22,12 +28,12 @@
 import ProductService from '../../services/ProductService'
 
 export default {
-  props: [
+  /* props: [
     'products'
   ],
-  data() {
+   */data() {
     return {
-      //products: [],
+      products: [],
       headers: [
         {text: 'Item Code', value: 'productId'},
         {text: 'Name', value: 'name'},

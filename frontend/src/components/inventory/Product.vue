@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import ProductService from '../../services/ProductService'
 import ProductList from './ProductList'
 
 export default {

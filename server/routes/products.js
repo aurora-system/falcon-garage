@@ -40,14 +40,14 @@ router.post('/', function(req, res, next) {
         productId: req.body.productId, 
         name: req.body.name, 
         brand: req.body.brand, 
-        other_details: req.body.other_details, 
-        for_vehicle: req.body.for_vehicle, 
+        otherDetails: req.body.otherDetails, 
+        forVehicle: req.body.forVehicle, 
         color: req.body.color, 
-        aqui_price: req.body.aqui_price,
+        aquiPrice: req.body.aquiPrice,
         srp: req.body.srp,
-        stock_level: req.body.stock_level,
+        stockLevel: req.body.stockLevel,
         categoryId: req.body.categoryId,
-        supplier_name: req.body.supplier_name
+        supplierName: req.body.supplierName
     };
     //console.log('req.body:', req.body)
     //console.log('newProd', newProd)

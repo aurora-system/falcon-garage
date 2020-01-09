@@ -48,8 +48,8 @@ class ProductService {
     }
 
     // Create a product
-    static insertProduct(productId, type) {
-        return axios.post(url, {productId, type});
+    static insertProduct(product) {
+        return axios.post(url, product);
     }
 
 }
