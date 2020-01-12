@@ -1,161 +1,172 @@
 <template>
     <div class="order">
         <v-form ref="form" :lazy-validation="false">
-            <v-container>
-                <v-row> 
-                    <!-- BASIC ORDER DETAILS -->
-                    <v-col class="d-flex">
-                         <v-container>
-                            <h4>Order Details</h4>
-                            <v-row dense >
-                                <v-col class="customerName">
-                                    <v-text-field :rules="custNameRules" id="customerName" v-model="order.customerName" label="Customer Name" required outlined></v-text-field>
-                                </v-col>
-                            </v-row>
-                            <v-row dense>
-                                <v-col class="orderType">
-                                    <v-select :rules="orderTypeRules" :items="orderTypes" label="Order Type" v-model="order.type" required outlined></v-select>
-                                </v-col>
-                            </v-row>
-                            <v-row dense>
-                                <v-col class="remarks">
-                                    <v-textarea
-                                        outlined
-                                        name="remarks"
-                                        label="Remarks"
-                                        value=""
-                                        height="100"
-                                        v-model="order.remarks"
-                                        ></v-textarea>
-                                </v-col>
-                            </v-row>
+                <v-card outlined>
+                    <v-card-title>
+                        <h4>Create an Order</h4>
+                    </v-card-title>
+                    <v-row> 
+                        <!-- BASIC ORDER DETAILS -->
+                        <v-col class="d-flex">
+                            <v-container>
+                                <h4>Order Details</h4>
+                                <v-row dense >
+                                    <v-col class="customerName">
+                                        <v-text-field :rules="custNameRules" id="customerName" v-model="order.customerName" label="Customer Name" required outlined></v-text-field>
+                                    </v-col>
+                                </v-row>
+                                <v-row dense>
+                                    <v-col class="orderType">
+                                        <v-select :rules="orderTypeRules" :items="orderTypes" label="Order Type" v-model="order.type" required outlined></v-select>
+                                    </v-col>
+                                </v-row>
+                                <v-row dense>
+                                    <v-col class="remarks">
+                                        <v-textarea
+                                            outlined
+                                            name="remarks"
+                                            label="Remarks"
+                                            value=""
+                                            height="100"
+                                            v-model="order.remarks"
+                                            no-resize
+                                            ></v-textarea>
+                                    </v-col>
+                                </v-row>
 
-                         </v-container>
-                    </v-col>
+                            </v-container>
+                        </v-col>
 
-                    <!-- PRODUCTS SELECTION -->
-                    <v-col class="d-flex" cols="12" md="9">
-                         <v-container>
-                             <h4>Product Selection</h4>
-                             <v-row v-for="(input, index) in inputs" v-bind:key="index" dense>
-                                 
-                                <!-- CATEGORIES -->
-                                <v-col cols="12" md="4">
-                                    <v-select
-                                        @change="getProductsOfCategory(input.category, index)"
-                                        :items="productCategories"
-                                        name="productCategory"
-                                        item-text="name"
-                                        item-value="categoryId"
-                                        label="Category"
-                                        v-model="input.category"
-                                        outlined>
-                                    </v-select>
-                                </v-col>
+                        <!-- PRODUCTS SELECTION -->
+                        <v-col class="d-flex" cols="12" md="9">
+                            <v-container>
+                                <h4>Product Selection</h4>
+                                <v-row v-for="(input, index) in inputs" v-bind:key="index" dense>
+                                    
+                                    <!-- DELETE BUTTON -->
+                                    <v-col class="deleteBtn" cols="12" md="1">
+                                        <v-icon @click="deleteRow(index)" large>mdi-trash-can-outline</v-icon>
+                                    </v-col>
 
-                                <!--_PRODUCTS -->
-                                <v-col cols="12" md="4">
-                                    <v-select 
-                                        @change=getSubtotalAmount(input.quantity,input.selectedProductId,index)
-                                        :items=input.products
-                                        name="product" 
-                                        item-text="name" 
-                                        item-value="_id"
-                                        label="Product" 
-                                        v-model="input.selectedProductId"
-                                        outlined>
-                                    </v-select>
-                                </v-col>
+                                    <!-- CATEGORIES -->
+                                    <v-col cols="12" md="4">
+                                        <v-select
+                                            @change="getProductsOfCategory(input.category, index)"
+                                            :items="productCategories"
+                                            :rules="categoryRules"
+                                            name="productCategory"
+                                            item-text="name"
+                                            item-value="categoryId"
+                                            label="Category"
+                                            v-model="input.category"
+                                            outlined>
+                                        </v-select>
+                                    </v-col>
 
-                                <!-- QUANTITY -->
-                                <v-col cols="12" md="1">
-                                    <v-text-field 
-                                        id="quantity" 
-                                        :rules="quantityRules"
-                                        @change=getSubtotalAmount(input.quantity,input.selectedProductId,index) 
-                                        v-model="input.quantity" 
-                                        label="Qty" 
-                                        type="number"
-                                        min="0"
-                                        required 
-                                        outlined></v-text-field>
-                                </v-col>
+                                    <!--_PRODUCTS -->
+                                    <v-col cols="12" md="4">
+                                        <v-select 
+                                            @change=getSubtotalAmount(input.quantity,input.selectedProductId,index)
+                                            :items=input.products
+                                            :rules="productRules"
+                                            name="product" 
+                                            item-text="name" 
+                                            item-value="_id"
+                                            label="Product" 
+                                            v-model="input.selectedProductId"
+                                            outlined>
+                                        </v-select>
+                                    </v-col>
 
-                                <!-- SUBTOTAL -->
-                                <v-col class="subtotalCost" cols="12" md="2">
-                                    <v-alert 
-                                        id="subtotal"
-                                        text 
-                                        color="green" 
-                                        icon="mdi-currency-php">{{ input.subtotal }}</v-alert>
-                                </v-col>
+                                    <!-- QUANTITY -->
+                                    <v-col cols="12" md="1">
+                                        <v-text-field 
+                                            id="quantity" 
+                                            :rules="quantityRules"
+                                            @change=getSubtotalAmount(input.quantity,input.selectedProductId,index) 
+                                            v-model="input.quantity" 
+                                            label="Qty" 
+                                            type="number"
+                                            min="0"
+                                            required 
+                                            outlined></v-text-field>
+                                    </v-col>
 
-                                <v-col class="deleteBtn" cols="12" md="1">
-                                    <v-icon @click="deleteRow(index)" large>mdi-trash-can-outline</v-icon>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <!--<v-icon class="addProductItem" @click="addRow" large color="green">mdi-plus-thick</v-icon>-->
-                                <v-col cols="12" md="2">
-                                    <div class="addBtn">
-                                        <v-btn large color="primary" @click="addRow">Add Item</v-btn>
-                                    </div>
-                                </v-col>
-                              </v-row>
+                                    <!-- SUBTOTAL -->
+                                    <v-col class="subtotalCost" cols="12" md="2">
+                                        <v-alert 
+                                            id="subtotal"
+                                            text 
+                                            color="green" 
+                                            icon="mdi-currency-php">{{ input.subtotal }}</v-alert>
+                                    </v-col>
 
-                            <v-row>
-                                <v-col cols="12" md="3"><h4>Total Amount: </h4></v-col>
-                                <v-col cols="12" md="9">
-                                    <v-alert class="totalAmount" text color="green" icon="mdi-currency-php" >{{ totalAmount }}</v-alert>
-                                </v-col>
-                            </v-row>
-                         </v-container>
-                    </v-col>
-                </v-row>
-            
-                <v-divider></v-divider>
+                                </v-row>
+                                <!--<v-row>
+                                    <v-col cols="12" md="2">
+                                        <div class="addBtn">
+                                            <v-btn large color="primary" @click="addRow">Add Item</v-btn>
+                                        </div>
+                                    </v-col>
+                                </v-row>-->
+                                <v-divider></v-divider>
+                                <v-row>
+                                    <!--<v-col cols="12" md="3"><h4>Total Amount: </h4></v-col>-->
+                                    <v-col cols="12" md="12">
+                                        <v-alert class="totalAmount" text color="green" icon="mdi-currency-php" >{{ totalAmount }}</v-alert>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
+                        </v-col>
+                    </v-row>
                 
-                <v-row>
-                    <v-col cols="12" sm="6" md="12">
-                        <v-snackbar
-                            v-model="snackbar"
-                            :bottom="y === 'bottom'"
-                            :color="color"
-                            :left="x === 'left'"
-                            :multi-line="mode === 'multi-line'"
-                            :right="x === 'right'"
-                            :timeout="timeout"
-                            :top="y === 'top'"
-                            :vertical="mode === 'vertical'"
-                            >
-                            {{ text }}
-                            <v-btn dark text @click="snackbar=false">
-                                Close
-                            </v-btn>
-                        </v-snackbar>
-                        <div class="submitBtn">
-                            <v-btn large color="primary" @click="createOrder">Submit</v-btn>
-                        </div>
-
-                        <v-dialog v-model="dialog" max-width="290">
-                            <v-card>
-                                <v-card-title class="headline">Success!</v-card-title>
-                                <v-card-text>
-                                The order has been saved.
-                                </v-card-text>
-
-                                <v-card-actions>
-                                <v-spacer></v-spacer>
-
-                                <v-btn color="primary" @click="reloadPage()">
+                    <v-divider></v-divider>
+                    
+                    <v-card-actions class="ml-4">
+                    <v-row>
+                        <v-col cols="12" sm="6" md="12">
+                            <v-snackbar
+                                v-model="snackbar"
+                                :bottom="y === 'bottom'"
+                                :color="color"
+                                :left="x === 'left'"
+                                :multi-line="mode === 'multi-line'"
+                                :right="x === 'right'"
+                                :timeout="timeout"
+                                :top="y === 'top'"
+                                :vertical="mode === 'vertical'"
+                                >
+                                {{ text }}
+                                <v-btn dark text @click="snackbar=false">
                                     Close
                                 </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-dialog>
-                    </v-col>                    
-                </v-row>
-            </v-container>
+                            </v-snackbar>
+                            
+                            <div class="submitBtn">
+                                <v-btn large color="primary" @click="addRow">Add a Product</v-btn>
+                                <v-btn large color="primary" @click="createOrder">Submit Order</v-btn>
+                            </div>
+
+                            <v-dialog v-model="dialog" max-width="290">
+                                <v-card>
+                                    <v-card-title class="headline">Success!</v-card-title>
+                                    <v-card-text>
+                                    The order has been saved.
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                    <v-spacer></v-spacer>
+
+                                    <v-btn color="primary" @click="reloadPage()">
+                                        Close
+                                    </v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                        </v-col>                    
+                    </v-row>
+                    </v-card-actions>
+                </v-card>
         </v-form>
     </div>
 </template>
@@ -204,6 +215,12 @@
                     v => !!v || ''
                 ],
                 quantityRules: [
+                    v => !!v || ''
+                ],
+                categoryRules: [
+                    v => !!v || ''
+                ],
+                productRules: [
                     v => !!v || ''
                 ]
 

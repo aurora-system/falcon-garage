@@ -22,9 +22,24 @@
           sort-by="createdDate"
           sort-desc
           :search="search"
+          @click:row="openOrderDetails()"
+          v-model="selected"
         >
         </v-data-table>
        </v-card>
+
+        <v-dialog id="orderDetails" v-model="dialog" persistent max-width=400>
+            <template v-slot:activator="{ on }">
+            </template>
+          <v-card>
+            <v-card-title>Order Details</v-card-title>
+            <v-card-text>Customer Name: </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" @click="dialog = false">Close</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
     </v-app>
   </div>
 </template>
@@ -35,6 +50,8 @@
   export default {
     data () {
     return {
+      dialog: false,
+      selected: [],
       singleSelect: false,
       headers: [
         { text: 'Ref. No.', value: 'referenceNum'},
@@ -46,6 +63,14 @@
       ],
       orders: [],
       search: ''
+    }
+  },
+  methods: {
+    openOrderDetails () {
+      this.dialog = true;
+
+      // Set order details values
+      console.log("This is the passed data: " + this.selected[0]);
     }
   },
   async created() {
@@ -64,4 +89,5 @@
 #orderList {
   font-family: 'Raleway', sans-serif;
 }
+
 </style>

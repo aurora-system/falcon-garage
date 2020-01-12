@@ -76,4 +76,8 @@ export default {
 #orderList {
   font-family: 'Raleway', sans-serif;
 }
+
+.info .mb-4 {
+  padding: px;
+}
 </style>

@@ -1,7 +1,6 @@
 <template>
   <div class="orders">
     <div class="orderForm">
-      <h3>Enter Order Details</h3>
       <orderForm></orderForm>
     </div>
     <div class="orderList">
