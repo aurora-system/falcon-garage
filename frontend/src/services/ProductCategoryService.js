@@ -20,8 +20,8 @@ class ProductCategoryService {
     }
 
     // Create Product Category
-    static insertProductCategory(productCategoryId, name) {
-        return axios.post(url, {productCategoryId, name});
+    static insertProductCategory(category) {
+        return axios.post(url, category);
     }
 
 }

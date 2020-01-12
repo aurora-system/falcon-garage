@@ -5,6 +5,7 @@ import About from './components/general/About.vue';
 import Orders from './components/ordering/Order.vue';
 import Products from './components/inventory/Product.vue';
 import ProductForm from './components/inventory/ProductForm.vue';
+import ProductCategory from './components/inventory/ProductCategory.vue';
 import Reports from './components/reporting/Report.vue';
 
 Vue.use(Router)
@@ -37,6 +38,11 @@ export default new Router({
       path: '/addProduct',
       name: 'addProduct',
       component: ProductForm
+    },
+    {
+      path: '/categories',
+      name: 'categories',
+      component: ProductCategory
     },
     {
       path: '/reports',

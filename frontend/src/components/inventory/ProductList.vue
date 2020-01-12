@@ -3,23 +3,35 @@
     <v-card>
       <v-card-title>
         <h4>List of Items</h4>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
       </v-card-title>
       <v-card-text>
         <v-data-table
-          
           :headers="headers"
           :items="products"
           :single-select="false"
+          :search="search"
           item-key="productId"
+          loading="products.length == 0"
+          loading-text="Loading Data"
           class="elevation-1"
         ></v-data-table>
       </v-card-text>
-      <v-card-action class="d-flex ml-4">
-        <v-btn class="success mb-4">Add Category</v-btn>
+      <v-card-actions class="d-flex ml-4">
+        <router-link to="/categories">
+          <v-btn class="success mb-4">Add Category</v-btn>
+        </router-link>
         <router-link to="/addProduct">
           <v-btn class="info mb-4">Add Product</v-btn>
         </router-link>
-      </v-card-action>
+      </v-card-actions>
     </v-card>
   </div>
 </template>
@@ -28,11 +40,9 @@
 import ProductService from '../../services/ProductService'
 
 export default {
-  /* props: [
-    'products'
-  ],
-   */data() {
+  data() {
     return {
+      search: '',
       products: [],
       headers: [
         {text: 'Item Code', value: 'productId'},

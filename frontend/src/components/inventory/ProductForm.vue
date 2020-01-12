@@ -54,7 +54,7 @@
               <v-col class="md-3">
                 <v-text-field id="stockLevel" v-model="product.stockLevel" label="Stock Level" outlined></v-text-field>
               </v-col>
-              <v-col class="md-offset-9">
+              <v-col class="md-9">
                 <v-text-field id="supplierName" v-model="product.supplierName" label="Supplier" outlined></v-text-field>
               </v-col>
             </v-row>
@@ -62,9 +62,10 @@
         </v-card-text>
         <v-divider></v-divider>
         <p></p>
-        <v-card-action class="d-flex ml-4">
+        <v-card-actions class="ml-4">
           <v-btn class="success mb-4" @click="saveProduct">Save</v-btn>
-        </v-card-action>
+          <v-btn class="info mb-4" @click="backToProducts">Cancel</v-btn>
+        </v-card-actions>
       </v-card>
   </div>
 </template>
@@ -99,6 +100,9 @@ export default {
       } catch (err) {
         this.error = err.message
       }
+    },
+    backToProducts() {
+      this.$router.push('/products')
     }
   }
 }
