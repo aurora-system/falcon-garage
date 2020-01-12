@@ -1,22 +1,19 @@
 products:
 
-product_type:
+product_type/category:
 - id
 - name 
 
 PRODUCT CARD:
 - name - free to enter anything
 - brand - type lang nila
-- other_details ()
-- for what vehicle (optional field) 
+- other_details (optional)
+- for_vehicle (optional field) 
 - color - input text (optional)
 - aqui_price - input text
 - srp - input text
 - stock_level - input text
 - type/category/id - sheet name in google sheet
-
-- vehicle_make_model (vios 2012)
-
 - supplier_name
 
 in-out-history:
@@ -48,3 +45,4 @@ Order delivery:
 - save in/out entry to in-out-history
 - update stock level in product table
 
+Upload photo for product
