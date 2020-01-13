@@ -22,7 +22,7 @@
             <v-col cols="12" md="6">
                 <v-card>
                     <v-card-title>
-                        <h4>Daily Sales</h4>
+                        <h4>Orders Today</h4>
                     </v-card-title>
                     <v-data-table
                         :headers="headers"
@@ -41,7 +41,7 @@
             <v-col cols="12" md="6">
                 <v-card>
                     <v-card-title>
-                        <h4>Product Sales</h4>
+                        <h4>Products Sold Today</h4>
                     </v-card-title>
                     <v-data-table
                         :headers="headers"

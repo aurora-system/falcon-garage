@@ -14,17 +14,18 @@
           ></v-text-field>
         </v-card-title>
         <v-data-table
+          v-model="selected"
           :headers="headers"
           :items="orders"
-          item-key="name"
+          item-key="referenceNum"
+          item-value="referenceNum"
+          :search="search"
           class="elevation-1"
           no-data-text="There are no orders."
           sort-by="createdDate"
           sort-desc
-          :search="search"
           @click:row="openOrderDetails()"
-          v-model="selected"
-        >
+        > 
         </v-data-table>
        </v-card>
 
@@ -33,7 +34,7 @@
             </template>
           <v-card>
             <v-card-title>Order Details</v-card-title>
-            <v-card-text>Customer Name: </v-card-text>
+            <v-card-text>The details of the selected order will be displayed here. Backend coding required.</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="primary" @click="dialog = false">Close</v-btn>
@@ -66,11 +67,11 @@
     }
   },
   methods: {
-    openOrderDetails () {
+    openOrderDetails (item) {
       this.dialog = true;
 
       // Set order details values
-      console.log("This is the passed data: " + this.selected[0]);
+      console.log("This is the passed data: " + item);
     }
   },
   async created() {
