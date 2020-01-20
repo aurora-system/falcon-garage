@@ -13,20 +13,18 @@
             hide-details
           ></v-text-field>
         </v-card-title>
-        <v-data-table
-          v-model="selected"
-          :headers="headers"
-          :items="orders"
-          item-key="referenceNum"
-          item-value="referenceNum"
-          :search="search"
-          class="elevation-1"
-          no-data-text="There are no orders."
-          sort-by="createdDate"
-          sort-desc
-          @click:row="openOrderDetails()"
-        > 
-        </v-data-table>
+          <v-data-table
+            v-model="selected"
+            :headers="headers"
+            :items="orders"
+            item-key="referenceNum"
+            :search="search"
+            class="elevation-1"
+            no-data-text="There are no orders."
+            sort-by="createdDate"
+            sort-desc
+            @click:row="openOrderDetails(order)"> 
+          </v-data-table>
        </v-card>
 
         <v-dialog id="orderDetails" v-model="dialog" persistent max-width=400>
@@ -67,11 +65,11 @@
     }
   },
   methods: {
-    openOrderDetails (item) {
+    openOrderDetails (val) {
       this.dialog = true;
 
       // Set order details values
-      console.log("This is the passed data: " + item);
+      console.log("This is the passed data: " + val);
     }
   },
   async created() {
