@@ -6,6 +6,7 @@ import Orders from './components/ordering/Order.vue';
 import Products from './components/inventory/Product.vue';
 import ProductForm from './components/inventory/ProductForm.vue';
 import ProductCategory from './components/inventory/ProductCategory.vue';
+import InOutHistory from './components/history/InOutHistory'
 import Reports from './components/reporting/Report.vue';
 
 Vue.use(Router)
@@ -38,6 +39,11 @@ export default new Router({
       path: '/addProduct',
       name: 'addProduct',
       component: ProductForm
+    },
+    {
+      path: '/history',
+      name: 'history',
+      component: InOutHistory
     },
     {
       path: '/categories',
