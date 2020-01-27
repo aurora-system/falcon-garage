@@ -15,8 +15,15 @@
                     </v-text-field>
                 </v-col>
                 <v-col class="md-6">
-                  <v-text-field id="categoryId" v-model="product.categoryId" label="Product Category" outlined>
-                  </v-text-field>
+                  <v-select
+                    id="categoryId"
+                    :items="productCategories"
+                    name="productCategory"
+                    item-text="name"
+                    item-value="categoryId"
+                    label="Category"
+                    v-model="product.categoryId"
+                    outlined></v-select>
                 </v-col>
             </v-row>
             <v-row dense>
@@ -72,6 +79,8 @@
 
 <script>
 import ProductService from '../../services/ProductService'
+import ProductCategoryService from '../../services/ProductCategoryService'
+
 export default {
   data() {
     return {
@@ -89,6 +98,7 @@ export default {
         supplierName: ''
       },
       products: [],
+      productCategories: [],
       error: ''
     }
   },
@@ -103,6 +113,13 @@ export default {
     },
     backToProducts() {
       this.$router.push('/products')
+    }
+  },
+  async created() {
+    try {
+      this.productCategories = await ProductCategoryService.getProductCategories()
+    } catch (err) {
+      this.error = err.message 
     }
   }
 }

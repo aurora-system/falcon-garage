@@ -3,16 +3,20 @@ const Schema = mongoose.Schema;
 
 const InOutHistorySchema = new Schema({
 
-    trans_date: {
+    tranDate: {
         type: Date,
         default: Date.now,
         required: true
     },
-    trans_type: {
+    transType: {
         type: String,
         required: true
     },
     productId: {
+        type: Number,
+        required: true
+    },
+    productCount: {
         type: Number,
         required: true
     }
