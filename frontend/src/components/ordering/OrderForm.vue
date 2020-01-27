@@ -9,17 +9,54 @@
                         <!-- BASIC ORDER DETAILS -->
                         <v-col class="d-flex">
                             <v-container>
-                                <h4>Order Details</h4>
-                                <v-row dense >
+                                <!-- ORDER DATE -->
+                                <v-row dense>
+                                    <v-dialog
+                                        ref="dialog"
+                                        v-model="modal"
+                                        :return-value.sync="order.createdDate"
+                                        persistent
+                                        width="290px"
+                                    >
+                                        <template v-slot:activator="{ on }">
+                                        <v-text-field
+                                            v-model="order.createdDate"
+                                            label="Order Date"
+                                            prepend-icon="event"
+                                            readonly
+                                            v-on="on"
+                                            outlined
+                                        ></v-text-field>
+                                        </template>
+                                        <v-date-picker v-model="order.createdDate" scrollable>
+                                        <v-spacer></v-spacer>
+                                        <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+                                        <v-btn text color="primary" @click="$refs.dialog.save(order.createdDate)">OK</v-btn>
+                                        </v-date-picker>
+                                    </v-dialog>
+                                </v-row>
+
+                                <!-- ORDER TYPE -->
+                                <v-row dense>
+                                    <v-col class="orderType">
+                                        <v-select 
+                                            :rules="orderTypeRules" 
+                                            :items="orderTypes" 
+                                            label="Order Type" 
+                                            v-model="order.type" 
+                                            required 
+                                            outlined></v-select>
+                                    </v-col>
+                                </v-row>
+
+                                <!-- CUSTOMER NAME -->
+                                <v-row dense>
                                     <v-col class="customerName">
                                         <v-text-field :rules="custNameRules" id="customerName" v-model="order.customerName" label="Customer Name" required outlined></v-text-field>
                                     </v-col>
                                 </v-row>
-                                <v-row dense>
-                                    <v-col class="orderType">
-                                        <v-select :rules="orderTypeRules" :items="orderTypes" label="Order Type" v-model="order.type" required outlined></v-select>
-                                    </v-col>
-                                </v-row>
+
+                                <!-- REMARKS -->
                                 <v-row dense>
                                     <v-col class="remarks">
                                         <v-textarea
@@ -40,7 +77,6 @@
                         <!-- PRODUCTS SELECTION -->
                         <v-col class="d-flex" cols="12" md="9">
                             <v-container>
-                                <h4>Product Selection</h4>
                                 <v-row v-for="(input, index) in inputs" v-bind:key="index" dense>
                                     
                                     <!-- DELETE BUTTON -->
@@ -112,14 +148,48 @@
                                 <v-divider></v-divider>
                                 <v-row>
                                     <!--<v-col cols="12" md="3"><h4>Total Amount: </h4></v-col>-->
-                                    <v-col cols="12" md="12">
+                                    <v-col cols="12" md="4">
+                                        <v-select
+                                            @change="setDueDateState()"
+                                            :items="paymentTypes"
+                                            :rules="paymentTypeRules"
+                                            name="paymentType"
+                                            label="Payment Type"
+                                            v-model="order.paymentType"
+                                            outlined>
+                                            
+                                        </v-select>
+                                    </v-col>
+                                    <v-col cols="12" md="4">
+                                        <v-select
+                                            :items="monthlyDueDates"
+                                            :rules="paymentTypeRules"
+                                            name="monthlyDueDate"
+                                             label="Monthly Due Date"
+                                            v-model="order.monthlyDueDate"
+                                            :disabled="dueDateDisabled"
+                                            outlined>
+                                            
+                                        </v-select>
+                                    </v-col>
+                                    <v-col cols="12" md="4">
                                         <v-alert class="totalAmount" text color="green" icon="mdi-currency-php" >{{ totalAmount }}</v-alert>
                                     </v-col>
+                                </v-row>
+
+                                <v-row dense>
+                                    <v-alert
+                                        icon="mdi-lightbulb-outline"
+                                        prominent
+                                        text
+                                        type="info">
+                                        {{ guideText }}
+                                    </v-alert>
                                 </v-row>
                             </v-container>
                         </v-col>
                     </v-row>
-                
+
                     <v-divider></v-divider>
                     
                     <v-card-actions class="ml-4">
@@ -185,15 +255,21 @@
                 order: {
                     orderId: '1',
                     type: '',
+                    createdDate: new Date().toISOString().substr(0, 10),
                     customerName: '',
-                    createdDate: '',
+                    paymentType: '',
+                    monthlyDueDate: '',
                     totalAmount: 0,
                     remarks: '',
                     products: []
                 },
                 orderTypes: [ 'sale', 'service'],
+                paymentTypes: [ 'cash', 'check' ],
+                monthlyDueDates: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
                 products: [],
                 productCategories: [],
+                dueDateDisabled: true,
+                guideText: 'Press ADD A PRODUCT to add an additional product row. Default SRP is computed automatically buy you may override the value for this order. Total amount is also automatically computed. Press SUBMIT ORDER to save your entries. The order will be added to the list below.',
                 
                 // Snackbar data
                 color: 'success',
@@ -214,6 +290,9 @@
                 orderTypeRules: [
                     v => !!v || ''
                 ],
+                paymentTypeRules: [
+                    v => !!v || ''
+                ],
                 quantityRules: [
                     v => !!v || ''
                 ],
@@ -222,7 +301,8 @@
                 ],
                 productRules: [
                     v => !!v || ''
-                ]
+                ],
+                modal: false
 
             }
         },
@@ -253,6 +333,14 @@
                 this.snackbar = false;
                 this.dialog = false;
                 document.location.reload(true);
+            },
+            setDueDateState () {
+                if (this.order.paymentType == "check") {
+                    this.dueDateDisabled = false;
+                } else {
+                    this.dueDateDisabled = true;
+                    order.monthlyDueDate = 0;
+                }
             },
             /*getTotalAmount () {
                 var totalAmount = 0;

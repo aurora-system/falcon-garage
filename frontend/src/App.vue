@@ -34,6 +34,14 @@
             <v-list-item-title>Products</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item @click="routePage('expenses')">
+          <v-list-item-action>
+            <v-icon>money</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Expenses</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item @click="routePage('reports')">
           <v-list-item-action>
             <v-icon>equalizer</v-icon>

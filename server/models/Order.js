@@ -22,6 +22,14 @@ const OrderSchema = new Schema({
         type: Number,
         required: false
     },
+    paymentType: {
+        type: String,
+        required: true
+    },
+    monthlyDueDate: {
+        type: Number,
+        required: false
+    },
     remarks: {
         type: String,
         required: false

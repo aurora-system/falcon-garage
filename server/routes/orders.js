@@ -21,8 +21,10 @@ router.post('/', async (req, res) => {
     let newOrder = {
         type: req.body.order.type,
         customerName: req.body.order.customerName,
-        createdDate: new Date(),
+        createdDate: req.body.order.createdDate,
         totalAmount: req.body.order.totalAmount,
+        paymentType: req.body.order.paymentType,
+        monthlyDueDate: req.body.order.monthlyDueDate,
         referenceNum: Math.floor(100000 + Math.random() * 900000),
         remarks: req.body.order.remarks,
         products: req.body.order.products

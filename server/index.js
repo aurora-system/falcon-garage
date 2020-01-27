@@ -15,6 +15,7 @@ app.use(cors());
 app.use('/api/products', require('./routes/products'));
 app.use('/api/productcategories', require('./routes/productCategories'));
 app.use('/api/orders', require('./routes/orders'));
+app.use('/api/expenses', require('./routes/expenses'));
 app.use('/api/customers', require('./routes/customers'));
 app.use('/api/suppliers', require('./routes/suppliers'));
 
