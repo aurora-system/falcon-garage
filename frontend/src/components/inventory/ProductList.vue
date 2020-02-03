@@ -28,22 +28,16 @@
         <router-link to="/categories">
           <v-btn class="success mb-4">Add Category</v-btn>
         </router-link>
-        <router-link to="/addProduct">
-          <v-btn class="info mb-4">Add Product</v-btn>
-        </router-link>
       </v-card-actions>
     </v-card>
   </div>
 </template>
 
 <script>
-import ProductService from '../../services/ProductService'
-
 export default {
   data() {
     return {
       search: '',
-      products: [],
       headers: [
         {text: 'Item Code', value: 'productId'},
         {text: 'Name', value: 'name'},
@@ -57,14 +51,11 @@ export default {
         {text: 'Category Id', value: 'categoryId'},
         {text: 'Supplier Name', value: 'supplierName'}
       ],
-
     }
   },
-  async created() {
-    try {
-      this.products = await ProductService.getProducts();
-    } catch (err) {
-      this.error = err.message;
+  computed: {
+    products() {
+      return this.$store.state.products
     }
   }
 }

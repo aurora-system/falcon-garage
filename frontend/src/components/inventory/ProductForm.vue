@@ -15,10 +15,9 @@
                     </v-text-field>
                 </v-col>
                 <v-col class="md-6">
-                  <v-select
+                  <v-select dense
                     id="categoryId"
-                    :items="productCategories"
-                    name="productCategory"
+                    :items="categories"
                     item-text="name"
                     item-value="categoryId"
                     label="Category"
@@ -78,8 +77,7 @@
 </template>
 
 <script>
-import ProductService from '../../services/ProductService'
-import ProductCategoryService from '../../services/ProductCategoryService'
+import { mapActions } from 'vuex'
 
 export default {
   data() {
@@ -97,29 +95,28 @@ export default {
         categoryId: 0,
         supplierName: ''
       },
-      products: [],
-      productCategories: [],
       error: ''
     }
   },
+  computed: {
+    categories() {
+      return this.$store.state.categories
+    }
+  },
   methods: {
+    ...mapActions([
+      'addProduct'
+    ]),
     saveProduct() {
       try {
-        this.products = ProductService.insertProduct(this.product)
-        this.$router.push('/products')
+        this.addProduct(this.product)
+        this.$refs.form.reset()
       } catch (err) {
         this.error = err.message
       }
     },
     backToProducts() {
       this.$router.push('/products')
-    }
-  },
-  async created() {
-    try {
-      this.productCategories = await ProductCategoryService.getProductCategories()
-    } catch (err) {
-      this.error = err.message 
     }
   }
 }
