@@ -7,191 +7,200 @@
                     </v-card-title>
                     <v-row> 
                         <!-- BASIC ORDER DETAILS -->
-                        <v-col class="d-flex">
                             <v-container>
-                                <!-- ORDER DATE -->
                                 <v-row dense>
-                                    <v-dialog
-                                        ref="dialog"
-                                        v-model="modal"
-                                        :return-value.sync="order.createdDate"
-                                        persistent
-                                        width="290px"
-                                    >
-                                        <template v-slot:activator="{ on }">
-                                        <v-text-field
-                                            v-model="order.createdDate"
-                                            label="Order Date"
-                                            prepend-icon="event"
-                                            readonly
-                                            v-on="on"
-                                            outlined
-                                        ></v-text-field>
-                                        </template>
-                                        <v-date-picker v-model="order.createdDate" scrollable>
-                                        <v-spacer></v-spacer>
-                                        <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
-                                        <v-btn text color="primary" @click="$refs.dialog.save(order.createdDate)">OK</v-btn>
-                                        </v-date-picker>
-                                    </v-dialog>
-                                </v-row>
-
-                                <!-- ORDER TYPE -->
-                                <v-row dense>
-                                    <v-col class="orderType">
-                                        <v-select 
-                                            :rules="orderTypeRules" 
-                                            :items="orderTypes" 
-                                            label="Order Type" 
-                                            v-model="order.type" 
-                                            required 
-                                            outlined></v-select>
-                                    </v-col>
-                                </v-row>
-
-                                <!-- CUSTOMER NAME -->
-                                <v-row dense>
-                                    <v-col class="customerName">
-                                        <v-text-field :rules="custNameRules" id="customerName" v-model="order.customerName" label="Customer Name" required outlined></v-text-field>
-                                    </v-col>
-                                </v-row>
-
-                                <!-- REMARKS -->
-                                <v-row dense>
-                                    <v-col class="remarks">
-                                        <v-textarea
-                                            outlined
-                                            name="remarks"
-                                            label="Remarks"
-                                            value=""
-                                            height="100"
-                                            v-model="order.remarks"
-                                            no-resize
-                                            ></v-textarea>
-                                    </v-col>
-                                </v-row>
-
-                            </v-container>
-                        </v-col>
-
-                        <!-- PRODUCTS SELECTION -->
-                        <v-col class="d-flex" cols="12" md="9">
-                            <v-container>
-                                <v-row v-for="(input, index) in inputs" v-bind:key="index" dense>
-                                    
-                                    <!-- DELETE BUTTON -->
-                                    <v-col class="deleteBtn" cols="12" md="1">
-                                        <v-icon @click="deleteRow(index)" large>mdi-trash-can-outline</v-icon>
-                                    </v-col>
-
-                                    <!-- CATEGORIES -->
                                     <v-col cols="12" md="4">
-                                        <v-select
-                                            @change="getProductsOfCategory(input.category, index)"
-                                            :items="productCategories"
-                                            :rules="categoryRules"
-                                            name="productCategory"
-                                            item-text="name"
-                                            item-value="categoryId"
-                                            label="Category"
-                                            v-model="input.category"
-                                            outlined>
-                                        </v-select>
+                                        <v-container>
+                                            <v-row>
+                                                <!-- ORDER DATE -->
+                                                <v-dialog
+                                                    ref="dialog"
+                                                    v-model="modal"
+                                                    :return-value.sync="order.createdDate"
+                                                    persistent
+                                                    width="290px"
+                                                >
+                                                    <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        v-model="order.createdDate"
+                                                        label="Order Date"
+                                                        readonly
+                                                        v-on="on"
+                                                        outlined
+                                                    ></v-text-field>
+                                                    </template>
+                                                    <v-date-picker v-model="order.createdDate" scrollable>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+                                                    <v-btn text color="primary" @click="$refs.dialog.save(order.createdDate)">OK</v-btn>
+                                                    </v-date-picker>
+                                                </v-dialog>
+                                            </v-row>
+                                            <v-row>
+                                                <!-- ORDER TYPE -->
+                                                <v-select 
+                                                    :rules="orderTypeRules" 
+                                                    :items="orderTypes" 
+                                                    label="Order Type" 
+                                                    v-model="order.type" 
+                                                    required 
+                                                    outlined></v-select>
+                                                </v-row>
+                                            <v-row>
+                                                <!-- CUSTOMER NAME -->
+                                                <v-text-field :rules="custNameRules" id="customerName" v-model="order.customerName" label="Customer Name" required outlined></v-text-field>
+                                            </v-row>
+                                        </v-container>
                                     </v-col>
 
-                                    <!--_PRODUCTS -->
                                     <v-col cols="12" md="4">
-                                        <v-select 
-                                            @change=getSubtotalAmount(input.quantity,input.selectedProductId,index)
-                                            :items=input.products
-                                            :rules="productRules"
-                                            name="product" 
-                                            item-text="name" 
-                                            item-value="_id"
-                                            label="Product" 
-                                            v-model="input.selectedProductId"
-                                            outlined>
-                                        </v-select>
+                                        <v-container>
+                                        
+                                        <v-row>
+                                            <v-select
+                                                @change="setDueDateState()"
+                                                :items="paymentTypes"
+                                                :rules="paymentTypeRules"
+                                                name="paymentType"
+                                                label="Payment Type"
+                                                v-model="order.paymentType"
+                                                outlined>
+                                            </v-select>
+                                        </v-row>
+                                        <v-row>
+                                            <v-select
+                                                :items="monthlyDueDates"
+                                                :rules="paymentTypeRules"
+                                                name="monthlyDueDate"
+                                                label="Monthly Due Date"
+                                                v-model="order.monthlyDueDate"
+                                                :disabled="dueDateDisabled"
+                                                outlined>
+                                            </v-select>
+                                        </v-row>
+                                        <v-row>
+                                             <!-- REMARKS -->
+                                            <v-text-field
+                                                outlined
+                                                name="remarks"
+                                                label="Remarks"
+                                                value=""
+                                                v-model="order.remarks"
+                                                no-resize
+                                                ></v-text-field>
+                                        </v-row>
+                                       
+                                        </v-container>
                                     </v-col>
 
-                                    <!-- QUANTITY -->
-                                    <v-col cols="12" md="1">
-                                        <v-text-field 
-                                            id="quantity" 
-                                            :rules="quantityRules"
-                                            @change=getSubtotalAmount(input.quantity,input.selectedProductId,index) 
-                                            v-model="input.quantity" 
-                                            label="Qty" 
-                                            type="number"
-                                            min="0"
-                                            required 
-                                            outlined></v-text-field>
+                                    <v-col cols="12" md="4">
+                                        <!-- GUIDE -->
+                                        <v-container>
+                                            <v-alert
+                                                icon="mdi-lightbulb-outline"
+                                                prominent
+                                                text
+                                                type="info">
+                                                {{ guideText }}
+                                            </v-alert>
+                                        </v-container>
                                     </v-col>
-
-                                    <!-- SUBTOTAL -->
-                                    <v-col class="subtotalCost" cols="12" md="2">
-                                        <v-alert 
-                                            id="subtotal"
-                                            text 
-                                            color="green" 
-                                            icon="mdi-currency-php">{{ input.subtotal }}</v-alert>
-                                    </v-col>
-
                                 </v-row>
-                                <!--<v-row>
-                                    <v-col cols="12" md="2">
-                                        <div class="addBtn">
-                                            <v-btn large color="primary" @click="addRow">Add Item</v-btn>
-                                        </div>
-                                    </v-col>
-                                </v-row>-->
+
                                 <v-divider></v-divider>
-                                <v-row>
-                                    <!--<v-col cols="12" md="3"><h4>Total Amount: </h4></v-col>-->
-                                    <v-col cols="12" md="4">
-                                        <v-select
-                                            @change="setDueDateState()"
-                                            :items="paymentTypes"
-                                            :rules="paymentTypeRules"
-                                            name="paymentType"
-                                            label="Payment Type"
-                                            v-model="order.paymentType"
-                                            outlined>
-                                            
-                                        </v-select>
-                                    </v-col>
-                                    <v-col cols="12" md="4">
-                                        <v-select
-                                            :items="monthlyDueDates"
-                                            :rules="paymentTypeRules"
-                                            name="monthlyDueDate"
-                                             label="Monthly Due Date"
-                                            v-model="order.monthlyDueDate"
-                                            :disabled="dueDateDisabled"
-                                            outlined>
-                                            
-                                        </v-select>
-                                    </v-col>
-                                    <v-col cols="12" md="4">
-                                        <v-alert class="totalAmount" text color="green" icon="mdi-currency-php" >{{ totalAmount }}</v-alert>
-                                    </v-col>
-                                </v-row>
 
-                                <v-row dense>
-                                    <v-alert
-                                        icon="mdi-lightbulb-outline"
-                                        prominent
-                                        text
-                                        type="info">
-                                        {{ guideText }}
-                                    </v-alert>
-                                </v-row>
+                            <!-- PRODUCTS SELECTION -->
+                                    <v-row class="productSelection" v-for="(input, index) in inputs" v-bind:key="index" >
+                                        
+                                        <!-- DELETE BUTTON -->
+                                        <v-col class="deleteBtn" cols="12" md="1">
+                                            <!--<v-icon @click="deleteRow(index)" large>mdi-trash-can-outline</v-icon>-->
+                                            <v-btn large color="error" @click="deleteRow(index)">remove</v-btn>
+                                        </v-col>
+
+                                        <!-- CATEGORIES -->
+                                        <v-col cols="12" md="3">
+                                            <v-select
+                                                @change="getProductsOfCategory(input.category, index)"
+                                                :items="productCategories"
+                                                :rules="categoryRules"
+                                                name="productCategory"
+                                                item-text="name"
+                                                item-value="categoryId"
+                                                label="Category"
+                                                v-model="input.category"
+                                                outlined>
+                                            </v-select>
+                                        </v-col>
+
+                                        <!--_PRODUCTS -->
+                                        <v-col cols="12" md="3">
+                                            <v-select 
+                                                @change=getSubtotalAmount(input.quantity,input.selectedProductId,index)
+                                                :items=input.products
+                                                :rules="productRules"
+                                                name="product" 
+                                                item-text="name" 
+                                                item-value="_id"
+                                                label="Product" 
+                                                v-model="input.selectedProductId"
+                                                outlined>
+                                            </v-select>
+                                        </v-col>
+
+                                        <!-- QUANTITY -->
+                                        <v-col cols="12" md="1">
+                                            <v-text-field 
+                                                id="quantity" 
+                                                :rules="quantityRules"
+                                                @change=getSubtotalAmount(input.quantity,input.selectedProductId,index) 
+                                                v-model="input.quantity" 
+                                                label="Qty" 
+                                                type="number"
+                                                min="0"
+                                                required 
+                                                outlined></v-text-field>
+                                        </v-col>
+
+                                        <!-- SUBTOTAL -->
+                                        <v-col class="subtotalCost" cols="12" md="2">
+                                            <v-alert 
+                                                id="subtotal"
+                                                text 
+                                                color="green"
+                                                icon="mdi-currency-php">{{ input.subtotal }}</v-alert>
+                                        </v-col>
+
+                                        <v-col class="overridePrice" cols="12" md="2">
+                                            <v-text-field 
+                                                name="overridePrice"
+                                                label="Overide Price"
+                                                type="number"
+                                                min="0"
+                                                outlined></v-text-field>
+                                        </v-col>
+
+                                    </v-row>
+
+                                    <v-divider></v-divider>
+                                    <!--<v-row>
+                                        <v-col cols="12" md="2">
+                                            <div class="addBtn">
+                                                <v-btn large color="primary" @click="addRow">Add Item</v-btn>
+                                            </div>
+                                        </v-col>
+                                    </v-row>-->
+                                    <v-row>
+                                        <!--<v-col cols="12" md="3"><h4>Total Amount: </h4></v-col>-->
+                                        <v-col cols="12" md="12">
+                                            <v-alert class="totalAmount" text color="green" icon="mdi-currency-php" >{{ totalAmount }}</v-alert>
+                                        </v-col>
+                                    </v-row>
+
+                                     <v-divider></v-divider>
                             </v-container>
-                        </v-col>
                     </v-row>
 
-                    <v-divider></v-divider>
-                    
                     <v-card-actions class="ml-4">
                     <v-row>
                         <v-col cols="12" sm="6" md="12">
@@ -270,7 +279,7 @@
                 productCategories: [],
                 dueDateDisabled: true,
                 guideText: 'Press ADD A PRODUCT to add an additional product row. Default SRP is computed automatically buy you may override the value for this order. Total amount is also automatically computed. Press SUBMIT ORDER to save your entries. The order will be added to the list below.',
-                
+                subtotalColor: "green",
                 // Snackbar data
                 color: 'success',
                 mode: 'multi-line',
@@ -445,6 +454,10 @@
 
 .order {
     font-family: 'Raleway', sans-serif;
+}
+
+.productSelection {
+
 }
 
 </style>

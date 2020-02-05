@@ -57,7 +57,7 @@
         { text: 'Type', value: 'type' },
         { text: 'Customer Name', value: 'customerName' },
         { text: 'Total Amount', value: 'totalAmount'},
-        { text: 'Created Date', value: 'createdDate' },
+        { text: 'Date', value: 'createdDate' },
         { text: 'Remarks', value: 'remarks'}
       ],
       orders: [],
