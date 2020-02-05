@@ -4,6 +4,7 @@ import Home from './components/general/Home.vue';
 import About from './components/general/About.vue';
 import Orders from './components/ordering/Order.vue';
 import Products from './components/inventory/Product.vue';
+import Expenses from './components/expense/Expense.vue';
 import ProductForm from './components/inventory/ProductForm.vue';
 import ProductCategory from './components/inventory/ProductCategory.vue';
 import InOutHistory from './components/history/InOutHistory'
@@ -34,6 +35,11 @@ export default new Router({
       path: '/products',
       name: 'products',
       component: Products
+    },
+    {
+      path: '/expenses',
+      name: 'expenses',
+      component: Expenses
     },
     {
       path: '/addProduct',
