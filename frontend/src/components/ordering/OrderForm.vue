@@ -3,8 +3,11 @@
         <v-form ref="form" :lazy-validation="false">
                 <v-card outlined>
                     <v-card-title>
-                        <h4>Create an Order</h4>
+                        <v-col class="d-flex">
+                            <h4>Create an Order</h4>
+                        </v-col>
                     </v-card-title>
+                    <v-divider></v-divider>
                     <v-row> 
                         <!-- BASIC ORDER DETAILS -->
                             <v-container>
@@ -110,8 +113,9 @@
                                 <v-divider></v-divider>
 
                             <!-- PRODUCTS SELECTION -->
+                             <v-container>
                                     <v-row class="productSelection" v-for="(input, index) in inputs" v-bind:key="index" >
-                                        
+                                       
                                         <!-- DELETE BUTTON -->
                                         <v-col class="deleteBtn" cols="12" md="1">
                                             <!--<v-icon @click="deleteRow(index)" large>mdi-trash-can-outline</v-icon>-->
@@ -175,13 +179,15 @@
                                             <v-text-field 
                                                 name="overridePrice"
                                                 label="Overide Price"
+                                                @change=getSubtotalAmount(input.quantity,input.selectedProductId,index)
+                                                v-model="input.overridePrice"
                                                 type="number"
                                                 min="0"
                                                 outlined></v-text-field>
                                         </v-col>
 
                                     </v-row>
-
+                                </v-container>
                                     <v-divider></v-divider>
                                     <!--<v-row>
                                         <v-col cols="12" md="2">
@@ -197,10 +203,9 @@
                                         </v-col>
                                     </v-row>
 
-                                     <v-divider></v-divider>
                             </v-container>
                     </v-row>
-
+                    <v-divider></v-divider>
                     <v-card-actions class="ml-4">
                     <v-row>
                         <v-col cols="12" sm="6" md="12">
@@ -260,7 +265,7 @@
             return {
                 // Order form data
                 totalAmount: 0,
-                inputs: [ { products: [], category: '', quantity: '', subtotal: 0, selectedProductId: '' } ],
+                inputs: [ { products: [], category: '', quantity: '', subtotal: 0, selectedProductId: '', overridePrice: null } ],
                 order: {
                     orderId: '1',
                     type: '',
@@ -328,7 +333,8 @@
                     category: '',
                     quantity: '',
                     subtotal: 0,
-                    selectedProductId: ''
+                    selectedProductId: '',
+                    overridePrice: null
                 })
             },
             deleteRow(index) {
@@ -370,7 +376,14 @@
 
                 var product = await ProductService.getProductById(id);
                 inputItem.quantity = qty;
-                inputItem.subtotal = qty*product.srp;
+
+                if (inputItem.overridePrice == null || inputItem.overridePrice == "") {
+                    console.log("NULL OVERRIDE. product.srp is: " + product.srp);
+                    inputItem.subtotal = qty*product.srp;
+                } else {
+                    console.log("override price is not null.");
+                    inputItem.subtotal = qty*inputItem.overridePrice;
+                }
 
                 // Update the total amount
                 this.totalAmount = 0;
@@ -393,7 +406,6 @@
                     var orderToInsert = this.order;
                     
                     for (var i = 0; i < this.inputs.length; i++) {
-                        console.log("Name of the selected product: " + this.inputs[i].selectedProductId);
 
                         if (this.inputs[i].selectedProductId == '') {
                             this.snackbar = true;
