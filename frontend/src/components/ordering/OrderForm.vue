@@ -181,6 +181,7 @@
                                                 label="Overide Price"
                                                 @change=getSubtotalAmount(input.quantity,input.selectedProductId,index)
                                                 v-model="input.overridePrice"
+                                                :disabled="input.overridePriceDisabled"
                                                 type="number"
                                                 min="0"
                                                 outlined></v-text-field>
@@ -198,7 +199,10 @@
                                     </v-row>-->
                                     <v-row>
                                         <!--<v-col cols="12" md="3"><h4>Total Amount: </h4></v-col>-->
-                                        <v-col cols="12" md="12">
+                                        <v-col cols="12" md="4">
+                                            <v-alert class="totalAmount" text color="grey" >Total Amount</v-alert>
+                                        </v-col>
+                                        <v-col cols="12" md="8">
                                             <v-alert class="totalAmount" text color="green" icon="mdi-currency-php" >{{ totalAmount }}</v-alert>
                                         </v-col>
                                     </v-row>
@@ -265,7 +269,7 @@
             return {
                 // Order form data
                 totalAmount: 0,
-                inputs: [ { products: [], category: '', quantity: '', subtotal: 0, selectedProductId: '', overridePrice: null } ],
+                inputs: [ { products: [], category: '', quantity: '', subtotal: 0, selectedProductId: '', overridePrice: null, overridePriceDisabled: true } ],
                 order: {
                     orderId: '1',
                     type: '',
@@ -283,7 +287,7 @@
                 products: [],
                 productCategories: [],
                 dueDateDisabled: true,
-                guideText: 'Press ADD A PRODUCT to add an additional product row. Default SRP is computed automatically buy you may override the value for this order. Total amount is also automatically computed. Press SUBMIT ORDER to save your entries. The order will be added to the list below.',
+                guideText: 'Press ADD A PRODUCT to add an additional product row. Default SRP is computed automatically but you may override the value for this order. Total amount is also automatically computed. Press SUBMIT ORDER to save your entries. The order will be added to the list below.',
                 subtotalColor: "green",
                 // Snackbar data
                 color: 'success',
@@ -334,7 +338,8 @@
                     quantity: '',
                     subtotal: 0,
                     selectedProductId: '',
-                    overridePrice: null
+                    overridePrice: null,
+                    overridePriceDisabled: true
                 })
             },
             deleteRow(index) {
@@ -375,13 +380,16 @@
                 inputItem.selectedProduct = id;
 
                 var product = await ProductService.getProductById(id);
+
+                if (product != null) {
+                    inputItem.overridePriceDisabled = false;
+                }
+
                 inputItem.quantity = qty;
 
                 if (inputItem.overridePrice == null || inputItem.overridePrice == "") {
-                    console.log("NULL OVERRIDE. product.srp is: " + product.srp);
                     inputItem.subtotal = qty*product.srp;
                 } else {
-                    console.log("override price is not null.");
                     inputItem.subtotal = qty*inputItem.overridePrice;
                 }
 
