@@ -2,8 +2,8 @@
     <div class="expenses">
         <v-app id="expenseList">
             <v-card>
-                <v-card-title>
-                    <h4>List of Expenses</h4>
+                <v-card-title class="header-space">
+                    <p>List of Expenses</p>
                     <v-spacer></v-spacer>
                     <v-text-field
                         v-model="search"
@@ -61,10 +61,17 @@
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
 #expenseList {
   font-family: 'Raleway', sans-serif;
+}
+
+.header-space {
+    
+}
+
+.header-text {
+
 }
 
 </style>

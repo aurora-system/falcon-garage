@@ -60,11 +60,10 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app color="indigo" dark>
+    <v-app-bar app color="blue" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="headline text-uppercase">
+      <v-toolbar-title>
         <span>Falcon</span>
-        <span class="font-weight-light">GARAGE</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <span class="mr-2">v1.0</span>
@@ -80,8 +79,8 @@
       </v-container>
     </v-content>
 
-    <v-footer app color="indigo" dark>
-      <span class="white--text">&copy; 2019</span>
+    <v-footer app color="blue" dark>
+      <span class="white--text">&copy; 2020</span>
     </v-footer>
   </v-app>
 </template>
@@ -112,7 +111,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
 .main-app  { 
   font-family: 'Raleway', sans-serif;
