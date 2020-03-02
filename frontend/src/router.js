@@ -48,7 +48,7 @@ export default new Router({
     },
     {
       path: '/history',
-      name: 'history',
+      name: 'inOutHistory',
       component: InOutHistory
     },
     {

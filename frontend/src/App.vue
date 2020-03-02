@@ -34,6 +34,14 @@
             <v-list-item-title>Products</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item @click="routePage('inOutHistory')">
+          <v-list-item-action>
+            <v-icon>history</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>In Out History</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item @click="routePage('expenses')">
           <v-list-item-action>
             <v-icon>money</v-icon>
