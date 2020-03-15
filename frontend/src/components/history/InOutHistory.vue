@@ -19,8 +19,9 @@ export default {
         headers: [
             {text:'Date', value:'transDate'},
             {text:'Type', value:'transType'},
-            {text:'Product', value:'productId'},
-            {text:'Count', value:'productCount'}
+            {text:'Product', value:'product.ame'},
+            {text:'Count', value:'productCount'},
+            {text:'Total', value:'updatedCount'}
         ],
         items:[],
         search:'',

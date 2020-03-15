@@ -3,11 +3,10 @@ import Router from 'vue-router'
 import Home from './components/general/Home.vue';
 import About from './components/general/About.vue';
 import Orders from './components/ordering/Order.vue';
-import Products from './components/inventory/Product.vue';
+import ProductCategory from './views/ProductCategory.vue';
+import Products from './views/Product.vue';
+import ProductInOut from './views/ProductInOut'
 import Expenses from './components/expense/Expense.vue';
-import ProductForm from './components/inventory/ProductForm.vue';
-import ProductCategory from './components/inventory/ProductCategory.vue';
-import InOutHistory from './components/history/InOutHistory'
 import Reports from './components/reporting/Report.vue';
 
 Vue.use(Router)
@@ -32,29 +31,24 @@ export default new Router({
       component: Orders
     },
     {
+      path: '/categories',
+      name: 'categories',
+      component: ProductCategory
+    },
+    {
       path: '/products',
       name: 'products',
       component: Products
     },
     {
+      path: '/inouthistory',
+      name: 'inouthistory',
+      component: ProductInOut
+    },
+    {
       path: '/expenses',
       name: 'expenses',
       component: Expenses
-    },
-    {
-      path: '/addProduct',
-      name: 'addProduct',
-      component: ProductForm
-    },
-    {
-      path: '/history',
-      name: 'inOutHistory',
-      component: InOutHistory
-    },
-    {
-      path: '/categories',
-      name: 'categories',
-      component: ProductCategory
     },
     {
       path: '/reports',

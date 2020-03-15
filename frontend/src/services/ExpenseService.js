@@ -11,7 +11,7 @@ class ExpenseService {
                 const data = res.data;
                 resolve(data.map(expense => ({
                     ...expense,
-                    expenseDate: order.expenseDate.substring(0,16)
+                    // expenseDate: order.expenseDate.substring(0,16)
                 })))
             } catch (err) {
                 reject(err)

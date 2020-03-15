@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import ProductCategoryService from "../../services/ProductCategoryService";
+import ProductCategoryService from "../services/ProductCategoryService";
 
 export default {
   data() {

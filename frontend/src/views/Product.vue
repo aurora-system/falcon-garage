@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import ProductForm from './ProductForm'
-import ProductList from './ProductList'
+import ProductForm from '../components/inventory/ProductForm'
+import ProductList from '../components/inventory/ProductList'
 
 import { mapActions } from 'vuex'
 
