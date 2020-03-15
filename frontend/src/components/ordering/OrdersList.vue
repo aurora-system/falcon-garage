@@ -57,6 +57,7 @@
         { text: 'Type', value: 'type' },
         { text: 'Customer Name', value: 'customerName' },
         { text: 'Total Amount', value: 'totalAmount'},
+        { text: 'Payment Type', value: 'paymentType'},
         { text: 'Date', value: 'createdDate' },
         { text: 'Remarks', value: 'remarks'}
       ],

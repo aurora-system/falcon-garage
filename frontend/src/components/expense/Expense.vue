@@ -20,8 +20,6 @@
 
 <style>
 
-@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
-
 .expenses {
   font-family: 'Raleway', sans-serif;
 }
