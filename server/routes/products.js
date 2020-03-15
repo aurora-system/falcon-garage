@@ -47,7 +47,8 @@ router.post('/', function(req, res, next) {
         srp: req.body.srp,
         stockLevel: req.body.stockLevel,
         categoryId: req.body.categoryId,
-        supplierName: req.body.supplierName
+        supplierName: req.body.supplierName,
+        threshold: req.body.threshold
     };
     //console.log('req.body:', req.body)
     //console.log('newProd', newProd)

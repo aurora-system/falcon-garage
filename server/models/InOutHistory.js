@@ -19,6 +19,14 @@ const InOutHistorySchema = new Schema({
     productCount: {
         type: Number,
         required: true
+    },
+    prevCount: {
+        type: Number,
+        required: true
+    }, 
+    updatedCount: {
+        type: Number,
+        required: true
     }
 })
 

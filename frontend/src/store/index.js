@@ -36,7 +36,6 @@ export default new Vuex.Store({
                 })
         },
         addProduct: (context, payload) => {
-            console.log(payload)
             ProductService.insertProduct(payload)
                 .then(data => {
                     context.commit('addProduct', data)

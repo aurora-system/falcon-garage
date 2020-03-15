@@ -20,6 +20,7 @@ in-out-history:
 - date
 - type (in or out)
 - product_id
+- product_count
 
 
 

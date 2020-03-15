@@ -38,6 +38,10 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     },
+    threshold: {
+        type: Number,
+        required: true
+    },
     categoryId: {
         type: Number,
         required: true

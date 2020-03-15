@@ -4,14 +4,49 @@ const mongoose = require('mongoose');
 
 // load model
 require('../models/InOutHistory');
-const History = mongoose.model('InOutHistory');
+require('../models/Product')
+const InOutHistory = mongoose.model('InOutHistory');
+const Product = mongoose.model('Product');
 
 // list history for a product
-router.get('/:id', function(req, res, next) {
-    History.find({productId: req.params.id})
-        .then(hist => {
-            res.json(hist)
+router.get('/:productId', function(req, res, next) {
+    let product = {}
+    Product.findOne({productId:req.params.productId})
+        .then(item => {
+            product = item._doc
+            console.log(product)
         })
+    InOutHistory.find({productId: req.params.productId})
+        .then(history => {
+            let result = history.map(item => {
+                console.log(item)
+                return {...item._doc, product}
+            })
+            res.json(result)
+        })
+});
+
+// save in/out entry for a product
+router.post('/', function(req, res, next) {
+    let item = {
+        transDate: req.body.transDate,
+        transType: req.body.transType,
+        productId: req.body.productId,
+        productCount: req.body.productCount,
+        prevCount: req.body.prevCount,
+        updatedCount: req.body.updatedCount
+    };
+    //let {item} = req.body;
+    new InOutHistory(item)
+        .save()
+        .then(hist => {
+            console.log(hist);
+            res.json(hist);
+        })
+        .catch(err => {
+            console.log(err);
+            res.json(err)
+        });
 });
 
 // save in/out entry for a product
@@ -20,9 +55,11 @@ router.post('/:id', function(req, res, next) {
         //date:
         transType: req.body.transType,
         productId: req.params.id,
-        productCount: req.body.productCount
+        productCount: req.body.productCount,
+        prevCount: req.body.prevCount,
+        updatedCount: req.body.updatedCount
     };
-    new History(item)
+    new InOutHistory(item)
         .save()
         .then(hist => {
             console.log(hist);

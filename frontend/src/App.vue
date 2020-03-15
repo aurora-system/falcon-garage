@@ -34,6 +34,14 @@
             <v-list-item-title>Products</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item @click="routePage('inouthistory')">
+          <v-list-item-action>
+            <v-icon>wallet_giftcard</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Products In/Out</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item @click="routePage('expenses')">
           <v-list-item-action>
             <v-icon>money</v-icon>
@@ -80,8 +88,8 @@
 
 <script>
 
-import Router from './router.js';
-const router = Router;
+// import Router from './router.js';
+// const router = Router;
 
 export default {
   name: 'App',
@@ -97,7 +105,7 @@ export default {
       this.drawer = !this.drawer
     },
     routePage(name) {
-      router.push({ name: name })
+      this.$router.push({ name })
     }
   }
 };
