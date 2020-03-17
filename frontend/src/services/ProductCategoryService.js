@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = "/api/productcategories/";
+const url = "/productcategories";
 
 class ProductCategoryService {
     
