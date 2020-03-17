@@ -1,10 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
+const router = require('express').Router();
 
 // load Product Model
-require('../models/Expense');
-const Expense = mongoose.model('Expense');
+const Expense = require('../models/Expense');
 
 // list all expenses
 router.get('/', function(req, res, next) {

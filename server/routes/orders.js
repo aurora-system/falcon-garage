@@ -1,10 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
+const router = require('express').Router();
 
 // load Product Model
-require('../models/Order');
-const Order = mongoose.model('Order');
+const Order = require('../models/Order');
 
 // list all orders
 router.get('/', function(req, res, next) {

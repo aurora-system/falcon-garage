@@ -1,12 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
+const router = require('express').Router();
 
 // load model
-require('../models/InOutHistory');
-require('../models/Product')
-const InOutHistory = mongoose.model('InOutHistory');
-const Product = mongoose.model('Product');
+const InOutHistory = require('../models/InOutHistory');
+const Product = require('../models/Product')
 
 // list history for a product
 router.get('/:productId', function(req, res, next) {

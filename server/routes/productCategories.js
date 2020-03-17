@@ -1,10 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
+const router = require('express').Router();
 
 // load Product Category Model
-require('../models/ProductCategory');
-const ProductCategory = mongoose.model('ProductCategory');
+const ProductCategory = require('../models/ProductCategory');
 
 // list all product categories
 router.get('/', function(req, res, next) {
