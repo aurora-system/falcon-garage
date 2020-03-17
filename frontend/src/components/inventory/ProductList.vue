@@ -1,5 +1,5 @@
 <template>
-  <div class="product">
+  <v-container class="product">
     <v-card>
       <v-card-title>
         <h4>List of Items</h4>
@@ -22,7 +22,23 @@
           loading="products.length == 0"
           loading-text="Loading Data"
           class="elevation-1"
-        ></v-data-table>
+        >
+          <template v-slot:item.action="{ item }"> 
+            <v-icon
+              small
+              class="mr-2"
+              @click="editItem(item)"
+            >
+              edit
+            </v-icon>
+            <v-icon
+              small
+              @click="deleteItem(item)"
+            >
+              delete
+            </v-icon>
+          </template>
+        </v-data-table>
       </v-card-text>
       <v-card-actions class="d-flex ml-4">
         <router-link to="/categories">
@@ -30,7 +46,7 @@
         </router-link>
       </v-card-actions>
     </v-card>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -45,12 +61,14 @@ export default {
         {text: 'Details', value: 'otherDetails'},
         {text: 'Vehicle', value: 'forVehicle'},
         {text: 'Color', value: 'color'},
-        {text: 'Aqui Price', value: 'aquiPrice'},
+        /*{text: 'Aqui Price', value: 'aquiPrice'},*/
         {text: 'SRP', value: 'srp'},
         {text: 'Stock Level', value: 'stockLevel'},
-        {text: 'Category Id', value: 'categoryId'},
-        {text: 'Supplier Name', value: 'supplierName'}
+        /*{text: 'Category Id', value: 'categoryId'},*/
+        {text: 'Supplier Name', value: 'supplierName'},
+        {text: 'Actions', value: 'action', sortable: false}
       ],
+      
     }
   },
   computed: {

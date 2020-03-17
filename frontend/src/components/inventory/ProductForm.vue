@@ -1,5 +1,5 @@
 <template>
-  <div class="product">
+  <v-container class="product">
       <v-card>
         <v-card-title>
             <v-col class="d-flex">
@@ -10,11 +10,11 @@
         <v-card-text>
           <v-form>
             <v-row dense>
-                <v-col class="product-name md-6">
+                <v-col md="6">
                     <v-text-field id="productId" v-model="product.productId" label="Product Code" outlined>
                     </v-text-field>
                 </v-col>
-                <v-col class="md-6">
+                <v-col md="6">
                   <v-select dense
                     id="categoryId"
                     :items="categories"
@@ -26,41 +26,44 @@
                 </v-col>
             </v-row>
             <v-row dense>
-                <v-col class="product-name md-6">
+                <v-col md="6">
                     <v-text-field id="name" v-model="product.name" label="Product Name" required outlined>
                     </v-text-field>
                 </v-col>
-                <v-col class="md-6">
+                <v-col md="6">
                   <v-text-field id="brand" v-model="product.brand" label="Brand" outlined>
                   </v-text-field>
                 </v-col>
             </v-row>
             <v-row dense>
-              <v-col class="md-12">
+              <v-col md="12">
                 <v-text-field id="otherDetails" v-model="product.otherDetails" label="Other Details" outlined></v-text-field>
               </v-col>
             </v-row>
             <v-row dense>
-              <v-col class="md-6">
+              <v-col md="6">
                 <v-text-field id="forVehicle" v-model="product.forVehicle" label="Vehicle" outlined></v-text-field>
               </v-col>
-              <v-col class="md-6">
+              <v-col md="6">
                 <v-text-field id="color" v-model="product.color" label="Color" outlined></v-text-field>
               </v-col>
             </v-row>
             <v-row dense>
-              <v-col class="md-6">
+              <v-col md="6">
                 <v-text-field id="aquiPrice" v-model="product.aquiPrice" label="Aqui Price" outlined></v-text-field>
               </v-col>
-              <v-col class="md-6">
+              <v-col md="6">
                 <v-text-field id="srp" v-model="product.srp" label="SRP" outlined></v-text-field>
               </v-col>
             </v-row>
             <v-row dense>
-              <v-col class="md-3">
+              <v-col md="3">
                 <v-text-field id="stockLevel" v-model="product.stockLevel" label="Stock Level" outlined></v-text-field>
               </v-col>
-              <v-col class="md-9">
+              <v-col md="3">
+                <v-text-field id="stockLevel" v-model="product.threshold" label="Threshold" outlined></v-text-field>
+              </v-col>
+              <v-col md="6">
                 <v-text-field id="supplierName" v-model="product.supplierName" label="Supplier" outlined></v-text-field>
               </v-col>
             </v-row>
@@ -73,7 +76,7 @@
           <v-btn class="info mb-4" @click="backToProducts">Cancel</v-btn>
         </v-card-actions>
       </v-card>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -84,6 +87,7 @@ export default {
     return {
       product: {
         productId: '',
+        categoryId: 0,
         name: '',
         brand: '',
         otherDetails: '',
@@ -92,7 +96,7 @@ export default {
         aquiPrice: 0.00,
         srp: 0.00,
         stockLevel: 0,
-        categoryId: 0,
+        threshold: 0,
         supplierName: ''
       },
       error: ''
