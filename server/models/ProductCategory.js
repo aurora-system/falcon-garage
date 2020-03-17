@@ -10,5 +10,6 @@ const ProductCatergorySchema = new Schema({
         type: String,
         required: true
     }
-})
-mongoose.model('ProductCategory', ProductCatergorySchema)
+});
+
+module.exports = mongoose.model('ProductCategory', ProductCatergorySchema);

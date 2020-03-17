@@ -28,6 +28,6 @@ const InOutHistorySchema = new Schema({
         type: Number,
         required: true
     }
-})
+});
 
-mongoose.model('InOutHistory', InOutHistorySchema)
+module.exports = mongoose.model('InOutHistory', InOutHistorySchema);

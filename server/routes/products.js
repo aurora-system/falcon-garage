@@ -1,10 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
+const router = require('express').Router();
 
 // load Product Model
-require('../models/Product');
-const Product = mongoose.model('Product');
+const Product = require('../models/Product');
 
 // list all products
 router.get('/', function(req, res, next) {
@@ -17,7 +14,7 @@ router.get('/', function(req, res, next) {
 });
 
 // list products for a given category
-router.get('/category=:id', function(req, res, next) {
+router.get('/?category=:id', function(req, res, next) {
     Product.find({ categoryId: req.params.id })
       .sort({name: 'asc'})
       .then(products => {

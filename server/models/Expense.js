@@ -18,5 +18,6 @@ const ExpenseSchema = new Schema({
         type: Date,
         required: true
     }
-})
-mongoose.model('Expense', ExpenseSchema)
+});
+
+module.exports = mongoose.model('Expense', ExpenseSchema);
