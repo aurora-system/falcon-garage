@@ -36,7 +36,7 @@
         </v-list-item>
         <v-list-item @click="routePage('inouthistory')">
           <v-list-item-action>
-            <v-icon>wallet_giftcard</v-icon>
+            <v-icon>loop</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Products In/Out</v-list-item-title>

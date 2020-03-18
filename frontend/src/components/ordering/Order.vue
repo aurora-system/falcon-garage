@@ -20,8 +20,6 @@
 
 <style>
 
-@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
-
 .orders {
   font-family: 'Raleway', sans-serif;
 }
