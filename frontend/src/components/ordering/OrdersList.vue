@@ -1,46 +1,48 @@
 <template>
-  <div class="order">
     <v-app id="orderList">
-       <v-card>
-         <v-card-title>
-          <h4>List of Orders</h4>
-          <v-spacer></v-spacer>
-          <v-text-field
-            v-model="search"
-            append-icon="search"
-            label="Search"
-            single-line
-            hide-details
-          ></v-text-field>
-        </v-card-title>
-          <v-data-table
-            v-model="selected"
-            :headers="headers"
-            :items="orders"
-            item-key="referenceNum"
-            :search="search"
-            class="elevation-1"
-            no-data-text="There are no orders."
-            sort-by="createdDate"
-            sort-desc
-            @click:row="openOrderDetails(order)"> 
-          </v-data-table>
-       </v-card>
+      <v-container class="order">
+        <v-card>
+          <v-card-title>
+            <h4>List of Orders</h4>
+            <v-spacer></v-spacer>
+            <v-text-field
+              v-model="search"
+              append-icon="search"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-card-title>
+          <v-card-text>
+            <v-data-table
+              v-model="selected"
+              :headers="headers"
+              :items="orders"
+              item-key="referenceNum"
+              :search="search"
+              class="elevation-1"
+              no-data-text="There are no orders."
+              sort-by="createdDate"
+              sort-desc
+              @click:row="openOrderDetails(order)"> 
+            </v-data-table>
+          </v-card-text>
+        </v-card>
 
-        <v-dialog id="orderDetails" v-model="dialog" persistent max-width=400>
-            <template v-slot:activator="{ on }">
-            </template>
-          <v-card>
-            <v-card-title>Order Details</v-card-title>
-            <v-card-text>The details of the selected order will be displayed here. Backend coding required.</v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="dialog = false">Close</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+          <v-dialog id="orderDetails" v-model="dialog" persistent max-width=400>
+              <template v-slot:activator="{ on }">
+              </template>
+            <v-card>
+              <v-card-title>Order Details</v-card-title>
+              <v-card-text>The details of the selected order will be displayed here. Backend coding required.</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" @click="dialog = false">Close</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-container>
     </v-app>
-  </div>
 </template>
 
 <script>
